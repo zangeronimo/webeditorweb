@@ -1,0 +1,10 @@
+node_modules
+.vscode
+coverage
+dist
+.husky/_
+yarn.error.log
+cypress.json
+cypress.config.ts
+cypress/screenshots
+webpack.prod.js
