@@ -1,7 +1,24 @@
 import { type InputHTMLAttributes } from 'react'
 
-type Props = InputHTMLAttributes<HTMLInputElement>
+import Styles from './styles.module.scss'
 
-export const Input = ({ ...rest }: Props): JSX.Element => {
-  return <input {...rest} />
+type Props = InputHTMLAttributes<HTMLInputElement> & {
+  label: string
+  name: string
+  error?: string
+}
+
+export const Input = ({
+  label,
+  name,
+  error = '',
+  ...rest
+}: Props): JSX.Element => {
+  return (
+    <div className={Styles.container}>
+      <label htmlFor={name}>{label}</label>
+      <input id={name} name={name} {...rest} />
+      <p>{error}</p>
+    </div>
+  )
 }

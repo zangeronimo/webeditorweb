@@ -7,6 +7,15 @@ export class AxiosProvider implements IHttpProvider {
     this.api = axios.create({
       baseURL,
     })
+    const tokenData = localStorage.getItem('WEBEditor:token')
+    if (tokenData) {
+      const { token } = JSON.parse(tokenData)
+      this.setToken(token)
+    }
+  }
+
+  setToken = (token: string): void => {
+    this.api.defaults.headers.Authorization = `Bearer ${token}`
   }
 
   get = async <T, V>(url: string, params: V): Promise<T> => {

@@ -1,5 +1,9 @@
-import { LoginFactory } from '@/application/factory/login'
+import { useAuth } from './hooks/useAuth'
+import { Router } from './router'
 
 export const App = (): JSX.Element => {
-  return <LoginFactory />
+  const { isAuthenticated } = useAuth()
+
+  if (!isAuthenticated) return <Router />
+  return <Router />
 }

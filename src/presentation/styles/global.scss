@@ -1,14 +1,34 @@
+@import '@/presentation/styles/colors.scss';
+
 * {
   font-family: 'Roboto', sans-serif;
+  font-weight: 400;
   font-size: 14px;
   padding: 0;
   margin: 0;
   box-sizing: border-box;
   -webkit-font-smoothing: antialiased;
+  color: $black;
 }
 
 body {
   width: 100vw;
   height: 100vh;
   font-size: 62.5%;
+  background-color: $white;
+}
+
+strong {
+  font-family: inherit;
+  font-weight: 700;
+}
+a {
+  text-decoration: none;
+  &:link,
+  &:active {
+    color: $black;
+  }
+  &:visited {
+    color: $grey900;
+  }
 }

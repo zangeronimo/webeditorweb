@@ -1,4 +1,5 @@
 import { type IMakeLogin } from '@/application/interface/makeLogin'
+import { useAuth } from '@/presentation/hooks/useAuth'
 import { type ChangeEvent, useState } from 'react'
 
 interface Output {
@@ -12,6 +13,7 @@ interface Output {
 
 export const useLogin = (): Output => {
   const [state, setState] = useState({ username: '', password: '' })
+  const { login } = useAuth()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (e?.target?.name && e?.target?.value)
@@ -22,7 +24,7 @@ export const useLogin = (): Output => {
     _makeLogin
       .execute(state.username, state.password)
       .then(res => {
-        console.log(res)
+        login(res)
       })
       .catch((e: Error) => {
         console.error(e.message)
