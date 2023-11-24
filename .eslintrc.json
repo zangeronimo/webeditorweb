@@ -44,10 +44,14 @@
     "no-use-before-define": "off",
     "react/no-children-prop": "off",
     "@typescript-eslint/no-use-before-define": ["error"],
+    "@typescript-eslint/no-misused-promises": "off",
     "import/extensions": [
       "error",
       "ignorePackages",
       {
+        "": "never",
+        "js": "never",
+        "jsx": "never",
         "ts": "never",
         "tsx": "never"
       }
