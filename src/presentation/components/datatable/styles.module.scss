@@ -1,0 +1,35 @@
+.container {
+  border: 1px solid grey;
+  .header {
+    th {
+      text-transform: capitalize;
+      background-color: #dfdfdf;
+      padding: 1rem;
+      border: 1px solid #e9e9e9;
+    }
+  }
+
+  .body {
+    tr {
+      background-color: white;
+    }
+    tr:nth-child(even) {
+      background-color: #e9e9e9;
+    }
+    td {
+      margin: 0;
+      padding: 0.5rem 1rem;
+      border: 1px solid #dfdfdf;
+    }
+  }
+
+  .left {
+    text-align: left;
+  }
+  .right {
+    text-align: right;
+  }
+  .center {
+    text-align: center;
+  }
+}

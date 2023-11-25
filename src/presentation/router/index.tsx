@@ -1,20 +1,42 @@
-import { LoginFactory } from '@/application/factory/login'
+import { LoginFactory } from '@/application/factory/system/login'
 import { Route, Routes } from 'react-router-dom'
-import { Dashboard } from '../pages/webeditor/dashboard'
+import { Dashboard } from '../pages/system/dashboard'
 import { AuthenticatedUrl } from './authenticatedUrl'
+import { Users } from '../pages/webeditor/users'
+import { PageNotFound } from '../pages/system/_404'
+import { RoleFactory } from '@/application/factory/system/role'
+
+const routes = [
+  { path: '/', element: <Dashboard />, private: true },
+  { path: '/webeditor/user', element: <Users />, private: true },
+  { path: '/administrator/role', element: <RoleFactory />, private: true },
+]
 
 export const Router = (): JSX.Element => {
   return (
     <Routes>
+      <Route path="/auth" element={<LoginFactory />} />
+      {routes.map(route => (
+        <Route
+          key={route.path}
+          path={route.path}
+          element={
+            route.private ? (
+              <AuthenticatedUrl>{route.element}</AuthenticatedUrl>
+            ) : (
+              route.element
+            )
+          }
+        />
+      ))}
       <Route
-        path="/"
+        path="*"
         element={
           <AuthenticatedUrl>
-            <Dashboard />
+            <PageNotFound />
           </AuthenticatedUrl>
         }
       />
-      <Route path="/auth" element={<LoginFactory />} />
     </Routes>
   )
 }

@@ -1,11 +1,11 @@
 import { decodeJwt } from 'jose'
-import { createContext, useContext, useMemo, type ReactNode } from 'react'
+import { createContext, useContext, type ReactNode } from 'react'
 import { useNavigate } from 'react-router-dom'
 
 type AuthContextData = {
   login: (token: string) => void
   logout: () => void
-  isAuthenticated: boolean
+  isAuthenticated: () => boolean
 }
 
 const STORAGE_NAME = 'WEBEditor:token'
@@ -32,15 +32,15 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
         JSON.stringify({ token, user: { id: payload.sub } }),
       )
     }
-    document.location.href = '/'
+    navigate('/')
   }
 
-  const isAuthenticated = useMemo(() => {
+  const isAuthenticated = (): boolean => {
     const tokenData = localStorage.getItem(STORAGE_NAME)
     if (!tokenData) return false
     const { token, user } = JSON.parse(tokenData)
     return !!token && !!user?.id
-  }, [])
+  }
 
   return (
     <AuthContext.Provider value={{ login, logout, isAuthenticated }}>

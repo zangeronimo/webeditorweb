@@ -1,6 +1,6 @@
 import { MakeLogin } from '@/application/usecase/makeLogin'
 import { AxiosProvider } from '@/infra/provider/axiosProvider'
-import { Login } from '@/presentation/pages/webeditor/login'
+import { Login } from '@/presentation/pages/system/login'
 
 export const LoginFactory = (): JSX.Element => {
   const httpProvider = new AxiosProvider(process.env.API_URL)

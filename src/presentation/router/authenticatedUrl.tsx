@@ -7,6 +7,6 @@ type Props = {
 
 export const AuthenticatedUrl = ({ children }: Props): JSX.Element => {
   const { isAuthenticated } = useAuth()
-  if (isAuthenticated) return <>{children}</>
+  if (isAuthenticated()) return <>{children}</>
   document.location.href = '/auth'
 }
