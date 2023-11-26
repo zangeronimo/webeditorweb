@@ -33,7 +33,7 @@ export const DataTable = ({ header, data, onOrder }: Props): JSX.Element => {
             return (
               <th key={i} className={styles}>
                 {item.label}{' '}
-                {!!onOrder && (
+                {!!onOrder && !!item?.order && (
                   <button
                     onClick={() => {
                       handleOrder(item.order)

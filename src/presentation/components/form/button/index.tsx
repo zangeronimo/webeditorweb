@@ -1,5 +1,7 @@
 import { type ButtonHTMLAttributes } from 'react'
 
+import Styles from './styles.module.scss'
+
 type Props = ButtonHTMLAttributes<HTMLButtonElement> & {
   label: string
   callback?: () => void
@@ -11,7 +13,7 @@ export const Button = ({
   ...rest
 }: Props): JSX.Element => {
   return (
-    <button onClick={callback} {...rest}>
+    <button onClick={callback} {...rest} className={Styles.container}>
       {label}
     </button>
   )

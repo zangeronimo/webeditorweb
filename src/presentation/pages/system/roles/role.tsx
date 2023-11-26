@@ -1,17 +1,40 @@
+import { type IRoleDelete } from '@/application/interface/roleDelete'
 import { type IRoleGetAll } from '@/application/interface/roleGetAll'
-import { type ChangeEvent, useEffect, useState, type FormEvent } from 'react'
+import { type IRoleGetById } from '@/application/interface/roleGetById'
+import { Button } from '@/presentation/components/form/button'
+import { Group } from '@/presentation/components/group'
+import { useModal } from '@/presentation/hooks/useModal'
+import {
+  type ChangeEvent,
+  useEffect,
+  useState,
+  type FormEvent,
+  type MutableRefObject,
+} from 'react'
 
 type Props = {
   _getAll: IRoleGetAll
+  _getById: IRoleGetById
+  _delete: IRoleDelete
+  deleteRef: MutableRefObject<HTMLDivElement>
 }
 
-export const useRole = ({ _getAll }: Props): any => {
+export const useRole = ({
+  _getAll,
+  _getById,
+  _delete,
+  deleteRef,
+}: Props): any => {
   const [state, setState] = useState({
+    toDelete: '',
+    payload: { id: '', name: '', label: '', order: 0, moduleId: '' },
     roles: { data: [], total: 0 },
     header: [
       { label: 'name', align: 'left', order: 'name' },
       { label: 'label', align: 'left', order: 'label' },
       { label: 'order', align: 'right', order: 'sort_order' },
+      { label: 'module', align: 'center' },
+      { label: 'tools', align: 'right' },
     ],
     filter: {
       page: 1,
@@ -20,9 +43,34 @@ export const useRole = ({ _getAll }: Props): any => {
       desc: true,
       name: '',
       label: '',
+      moduleId: '',
     },
     reloadData: false,
   })
+
+  const { showModal, closeModal } = useModal()
+
+  const handleChangePayload = (e: ChangeEvent<HTMLInputElement>): void => {
+    setState(old => ({
+      ...old,
+      payload: { ...old.payload, [e.target.name]: e.target.value },
+    }))
+  }
+
+  const handleClearPayload = (): void => {
+    setState(old => ({
+      ...old,
+      reloadData: !old.reloadData,
+      payload: {
+        ...old.payload,
+        id: '',
+        name: '',
+        label: '',
+        order: 0,
+        moduleId: '',
+      },
+    }))
+  }
 
   const handleSubmit = (e: FormEvent): void => {
     e.preventDefault()
@@ -65,10 +113,53 @@ export const useRole = ({ _getAll }: Props): any => {
         page: 1,
         name: '',
         label: '',
+        moduleId: '',
         orderBy: '',
         desc: true,
       },
     }))
+  }
+
+  const handleEdit = (id: string): void => {
+    _getById
+      .execute(id)
+      .then(res => {
+        setState(old => ({
+          ...old,
+          payload: {
+            ...old.payload,
+            id: res.id,
+            name: res.name,
+            label: res.label,
+            order: res.order,
+            moduleId: res.module.id,
+          },
+        }))
+        showModal()
+      })
+      .catch(e => {
+        handleClearPayload()
+        console.error(e.message)
+      })
+  }
+
+  const handleDelete = (): void => {
+    _delete
+      .execute(state.toDelete)
+      .then(res => {
+        closeModal(deleteRef)
+        alert(`Role ${res.name} removed with success`)
+        setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
+      })
+      .catch(e => {
+        handleClearPayload()
+        console.error(e.message)
+      })
+  }
+
+  const handleConfirmDelete = (id: string): void => {
+    setState(old => ({ ...old, toDelete: id }))
+    showModal(deleteRef)
   }
 
   useEffect(() => {
@@ -86,6 +177,9 @@ export const useRole = ({ _getAll }: Props): any => {
     if (state.filter.label) {
       filter.label = state.filter.label
     }
+    if (state.filter.moduleId) {
+      filter.moduleId = state.filter.moduleId
+    }
 
     _getAll
       .execute(filter)
@@ -96,6 +190,26 @@ export const useRole = ({ _getAll }: Props): any => {
               { value: row.name },
               { value: row.label },
               { align: 'right', value: row.order },
+              { align: 'center', value: row.module.name },
+              {
+                align: 'right',
+                value: (
+                  <Group align="right">
+                    <Button
+                      label="Edit"
+                      onClick={() => {
+                        handleEdit(row.id)
+                      }}
+                    />
+                    <Button
+                      label="Delete"
+                      onClick={() => {
+                        handleConfirmDelete(row.id)
+                      }}
+                    />
+                  </Group>
+                ),
+              },
             ],
           }
         })
@@ -115,5 +229,8 @@ export const useRole = ({ _getAll }: Props): any => {
     handleChangePage,
     handleChangeOrder,
     handleClearFilter,
+    handleChangePayload,
+    handleClearPayload,
+    handleDelete,
   }
 }

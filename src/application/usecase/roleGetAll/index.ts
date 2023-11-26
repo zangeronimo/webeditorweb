@@ -1,5 +1,6 @@
 import { type IHttpProvider } from '@/application/interface/httpProvider'
 import { type IRoleGetAll } from '@/application/interface/roleGetAll'
+import { Module } from '@/domain/entity/module'
 import { Role } from '@/domain/entity/role'
 
 export class RoleGetAll implements IRoleGetAll {
@@ -9,7 +10,14 @@ export class RoleGetAll implements IRoleGetAll {
       .get('/role', filter)
       .then(async (res: any) => {
         const roles: Role[] = res.itens.map(
-          item => new Role(item.Id, item.Name, item.Label, item.Order),
+          item =>
+            new Role(
+              item.Id,
+              item.Name,
+              item.Label,
+              item.Order,
+              new Module(item.Module.Id, item.Module.Name),
+            ),
         )
         return await Promise.resolve({ itens: roles, total: res.total })
       })

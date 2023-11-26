@@ -18,13 +18,23 @@ export class AxiosProvider implements IHttpProvider {
     this.api.defaults.headers.Authorization = `Bearer ${token}`
   }
 
-  get = async <T, V>(url: string, params: V): Promise<T> => {
+  get = async <T, V>(url: string, params?: V): Promise<T> => {
     const result = await this.api.get<T>(url, { params })
     return result.data
   }
 
   post = async <T, V>(url: string, body: V): Promise<T> => {
     const result = await this.api.post<T>(url, body)
+    return result.data
+  }
+
+  put = async <T, V>(url: string, body: V): Promise<T> => {
+    const result = await this.api.put<T>(url, body)
+    return result.data
+  }
+
+  delete = async <T>(url: string): Promise<T> => {
+    const result = await this.api.delete<T>(url)
     return result.data
   }
 }

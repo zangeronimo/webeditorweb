@@ -1,0 +1,17 @@
+.containter {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+
+  &[data-align='left'] {
+    justify-content: flex-start;
+  }
+
+  &[data-align='center'] {
+    justify-content: center;
+  }
+
+  &[data-align='right'] {
+    justify-content: flex-end;
+  }
+}

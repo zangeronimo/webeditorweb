@@ -16,6 +16,11 @@ body {
   height: 100vh;
   font-size: 62.5%;
   background-color: $white;
+  overflow: auto;
+  &[modal] {
+    overflow: hidden;
+    padding-right: 1.1rem;
+  }
 }
 
 strong {
