@@ -1,39 +1,33 @@
-import { type ISaveRole } from '@/application/interface/saveRole'
+import { type IModuleService } from '@/application/interface/system/module'
 import { Button } from '@/presentation/components/form/button'
 import { Input } from '@/presentation/components/form/input'
-import { Select, type SelectData } from '@/presentation/components/form/select'
 import { useModal } from '@/presentation/hooks/useModal'
 import { type FormEvent } from 'react'
 
 type Data = {
   id?: string
   name: string
-  label: string
-  order: number
-  moduleId: string
 }
 
 type Props = {
-  modules: SelectData[]
   handleClearPayload: () => void
   handleChangePayload: (e: FormEvent) => void
   data: Data
-  _save: ISaveRole
+  _moduleService: IModuleService
 }
 
 export const Form = ({
-  modules,
   handleClearPayload,
   handleChangePayload,
   data,
-  _save,
+  _moduleService,
 }: Props): JSX.Element => {
   const { closeModal } = useModal()
 
   const handleNewRole = (e: FormEvent): void => {
     e.preventDefault()
-    _save
-      .execute(data)
+    _moduleService
+      .save(data)
       .then(res => {
         handleClearPayload()
         closeModal()
@@ -51,26 +45,6 @@ export const Form = ({
         label="Name"
         value={data.name}
         onChange={handleChangePayload}
-      />
-      <Input
-        name="label"
-        label="Label"
-        value={data.label}
-        onChange={handleChangePayload}
-      />
-      <Input
-        name="order"
-        label="Order"
-        value={data.order}
-        onChange={handleChangePayload}
-      />
-      <Select
-        disabled={!!data.id}
-        name="moduleId"
-        label="Modules"
-        value={data.moduleId}
-        onChange={handleChangePayload}
-        data={[{ label: 'Select one', value: '' }, ...modules]}
       />
       <Button type="submit" label="Save" />
     </form>

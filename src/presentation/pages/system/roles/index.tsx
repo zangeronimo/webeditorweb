@@ -1,4 +1,3 @@
-import { type IModuleGetAll } from '@/application/interface/moduleGetAll'
 import { DataTable } from '@/presentation/components/datatable'
 import { Pagination } from '@/presentation/components/datatable/pagination'
 import { Button } from '@/presentation/components/form/button'
@@ -14,13 +13,14 @@ import { Form } from './form'
 import { useRole } from './role'
 import { Confirm } from '@/presentation/components/confirm'
 import { type IRoleService } from '@/application/interface/system/role'
+import { type IModuleService } from '@/application/interface/system/module'
 
 type Props = {
-  _moduleGetAll: IModuleGetAll
+  _moduleService: IModuleService
   _roleService: IRoleService
 }
 
-export const Roles = ({ _roleService, _moduleGetAll }: Props): JSX.Element => {
+export const Roles = ({ _roleService, _moduleService }: Props): JSX.Element => {
   const [modules, setModules] = useState<SelectData[]>([])
   const { showModal, closeModal } = useModal()
   const deleteRef = useRef()
@@ -37,8 +37,8 @@ export const Roles = ({ _roleService, _moduleGetAll }: Props): JSX.Element => {
   } = useRole({ _roleService, deleteRef })
 
   useEffect(() => {
-    _moduleGetAll
-      .execute({ page: 1, pageSize: 999 })
+    _moduleService
+      .getAll({ page: 1, pageSize: 999 })
       .then(res => {
         const items = res.itens.map(item => ({
           label: item.name,

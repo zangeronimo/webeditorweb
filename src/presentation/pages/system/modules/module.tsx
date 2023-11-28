@@ -1,13 +1,21 @@
-import { type IModuleGetAll } from '@/application/interface/moduleGetAll'
+import { type IModuleService } from '@/application/interface/system/module'
 import { Button } from '@/presentation/components/form/button'
 import { Group } from '@/presentation/components/group'
-import { type ChangeEvent, useEffect, useState, type FormEvent } from 'react'
+import { useModal } from '@/presentation/hooks/useModal'
+import {
+  type ChangeEvent,
+  useEffect,
+  useState,
+  type FormEvent,
+  type MutableRefObject,
+} from 'react'
 
 type Props = {
-  _getAll: IModuleGetAll
+  _moduleService: IModuleService
+  deleteRef: MutableRefObject<HTMLDivElement>
 }
 
-export const useModule = ({ _getAll }: Props): any => {
+export const useModule = ({ _moduleService, deleteRef }: Props): any => {
   const [state, setState] = useState({
     toDelete: '',
     payload: { id: '', name: '' },
@@ -26,7 +34,7 @@ export const useModule = ({ _getAll }: Props): any => {
     reloadData: false,
   })
 
-  // const { showModal, closeModal } = useModal()
+  const { showModal, closeModal } = useModal()
 
   const handleChangePayload = (e: ChangeEvent<HTMLInputElement>): void => {
     setState(old => ({
@@ -92,47 +100,44 @@ export const useModule = ({ _getAll }: Props): any => {
     }))
   }
 
-  // const handleEdit = (id: string): void => {
-  //   _getById
-  //     .execute(id)
-  //     .then(res => {
-  //       setState(old => ({
-  //         ...old,
-  //         payload: {
-  //           ...old.payload,
-  //           id: res.id,
-  //           name: res.name,
-  //           label: res.label,
-  //           order: res.order,
-  //           moduleId: res.module.id,
-  //         },
-  //       }))
-  //       showModal()
-  //     })
-  //     .catch(e => {
-  //       handleClearPayload()
-  //       console.error(e.message)
-  //     })
-  // }
+  const handleEdit = (id: string): void => {
+    _moduleService
+      .getById(id)
+      .then(res => {
+        setState(old => ({
+          ...old,
+          payload: {
+            ...old.payload,
+            id: res.id,
+            name: res.name,
+          },
+        }))
+        showModal()
+      })
+      .catch(e => {
+        handleClearPayload()
+        console.error(e.message)
+      })
+  }
 
-  // const handleDelete = (): void => {
-  //   _delete
-  //     .execute(state.toDelete)
-  //     .then(res => {
-  //       closeModal(deleteRef)
-  //       alert(`Module ${res.name} removed with success`)
-  //       setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
-  //     })
-  //     .catch(e => {
-  //       handleClearPayload()
-  //       console.error(e.message)
-  //     })
-  // }
+  const handleDelete = (): void => {
+    _moduleService
+      .delete(state.toDelete)
+      .then(res => {
+        closeModal(deleteRef)
+        alert(`Module ${res.name} removed with success`)
+        setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
+      })
+      .catch(e => {
+        handleClearPayload()
+        console.error(e.message)
+      })
+  }
 
-  // const handleConfirmDelete = (id: string): void => {
-  //   setState(old => ({ ...old, toDelete: id }))
-  //   showModal(deleteRef)
-  // }
+  const handleConfirmDelete = (id: string): void => {
+    setState(old => ({ ...old, toDelete: id }))
+    showModal(deleteRef)
+  }
 
   useEffect(() => {
     const filter = {
@@ -147,8 +152,8 @@ export const useModule = ({ _getAll }: Props): any => {
       filter.name = state.filter.name
     }
 
-    _getAll
-      .execute(filter)
+    _moduleService
+      .getAll(filter)
       .then((res: any) => {
         const modulesData = res.itens.map(row => {
           return {
@@ -160,15 +165,15 @@ export const useModule = ({ _getAll }: Props): any => {
                   <Group align="right">
                     <Button
                       label="Edit"
-                      // onClick={() => {
-                      //   handleEdit(row.id)
-                      // }}
+                      onClick={() => {
+                        handleEdit(row.id)
+                      }}
                     />
                     <Button
                       label="Delete"
-                      // onClick={() => {
-                      //   handleConfirmDelete(row.id)
-                      // }}
+                      onClick={() => {
+                        handleConfirmDelete(row.id)
+                      }}
                     />
                   </Group>
                 ),
@@ -194,6 +199,6 @@ export const useModule = ({ _getAll }: Props): any => {
     handleClearFilter,
     handleChangePayload,
     handleClearPayload,
-    // handleDelete,
+    handleDelete,
   }
 }

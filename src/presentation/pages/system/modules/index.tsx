@@ -1,4 +1,3 @@
-import { type IModuleGetAll } from '@/application/interface/moduleGetAll'
 import { DataTable } from '@/presentation/components/datatable'
 import { Pagination } from '@/presentation/components/datatable/pagination'
 import { Button } from '@/presentation/components/form/button'
@@ -8,13 +7,19 @@ import { View } from '@/presentation/components/view'
 import { ViewBox } from '@/presentation/components/viewBox'
 import { useModal } from '@/presentation/hooks/useModal'
 import { useModule } from './module'
+import { type IModuleService } from '@/application/interface/system/module'
+import { Modal } from '@/presentation/components/modal'
+import { Form } from './form'
+import { Confirm } from '@/presentation/components/confirm'
+import { useRef } from 'react'
 
 type Props = {
-  _getAll: IModuleGetAll
+  _moduleService: IModuleService
 }
 
-export const Modules = ({ _getAll }: Props): JSX.Element => {
-  const { showModal } = useModal()
+export const Modules = ({ _moduleService }: Props): JSX.Element => {
+  const { showModal, closeModal } = useModal()
+  const deleteRef = useRef()
   const {
     state,
     handleSubmit,
@@ -22,26 +27,25 @@ export const Modules = ({ _getAll }: Props): JSX.Element => {
     handleChangePage,
     handleChangeOrder,
     handleClearFilter,
-  } = useModule({ _getAll })
+    handleClearPayload,
+    handleChangePayload,
+    handleDelete,
+  } = useModule({ _moduleService, deleteRef })
 
   return (
     <View>
-      {/* <Modal title="Add new Role" onClose={handleClearPayload}>
+      <Modal title="Add new Module" onClose={handleClearPayload}>
         <Form
-          modules={modules}
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}
-          _save={_save}
+          _moduleService={_moduleService}
           data={{
             id: state.payload.id,
             name: state.payload.name,
-            label: state.payload.label,
-            order: state.payload.order,
-            moduleId: state.payload.moduleId,
           }}
         />
-      </Modal> */}
-      {/* <Confirm
+      </Modal>
+      <Confirm
         reference={deleteRef}
         title="Confirm"
         onConfirm={handleDelete}
@@ -50,7 +54,7 @@ export const Modules = ({ _getAll }: Props): JSX.Element => {
         }}
       >
         <p>Are you sure to delete the module?</p>
-      </Confirm> */}
+      </Confirm>
       <ViewBox title="Filter">
         <form onSubmit={handleSubmit}>
           <Group>
