@@ -1,4 +1,4 @@
-import { type IMakeLogin } from '@/application/interface/makeLogin'
+import { type IMakeLogin } from '@/application/interface/system/makeLogin'
 import { Button } from '@/presentation/components/form/button'
 import { Input } from '@/presentation/components/form/input'
 import { View } from '@/presentation/components/view'

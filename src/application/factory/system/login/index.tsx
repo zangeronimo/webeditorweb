@@ -1,4 +1,4 @@
-import { MakeLogin } from '@/application/usecase/makeLogin'
+import { MakeLogin } from '@/application/service/system/makeLogin'
 import { AxiosProvider } from '@/infra/provider/axiosProvider'
 import { Login } from '@/presentation/pages/system/login'
 

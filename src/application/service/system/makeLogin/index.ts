@@ -1,5 +1,5 @@
 import { type IHttpProvider } from '@/application/interface/httpProvider'
-import { type IMakeLogin } from '@/application/interface/makeLogin'
+import { type IMakeLogin } from '@/application/interface/system/makeLogin'
 
 export class MakeLogin implements IMakeLogin {
   constructor(readonly http: IHttpProvider) {}

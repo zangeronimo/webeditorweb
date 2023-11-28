@@ -1,45 +1,32 @@
-import { type IRoleService } from '@/application/interface/system/role'
+import { type IModuleGetAll } from '@/application/interface/moduleGetAll'
 import { Button } from '@/presentation/components/form/button'
 import { Group } from '@/presentation/components/group'
-import { useModal } from '@/presentation/hooks/useModal'
-import {
-  type ChangeEvent,
-  useEffect,
-  useState,
-  type FormEvent,
-  type MutableRefObject,
-} from 'react'
+import { type ChangeEvent, useEffect, useState, type FormEvent } from 'react'
 
 type Props = {
-  _roleService: IRoleService
-  deleteRef: MutableRefObject<HTMLDivElement>
+  _getAll: IModuleGetAll
 }
 
-export const useRole = ({ _roleService, deleteRef }: Props): any => {
+export const useModule = ({ _getAll }: Props): any => {
   const [state, setState] = useState({
     toDelete: '',
-    payload: { id: '', name: '', label: '', order: 0, moduleId: '' },
-    roles: { data: [], total: 0 },
+    payload: { id: '', name: '' },
+    modules: { data: [], total: 0 },
     header: [
       { label: 'name', align: 'left', order: 'name' },
-      { label: 'label', align: 'left', order: 'label' },
-      { label: 'order', align: 'right', order: 'sort_order' },
-      { label: 'module', align: 'center' },
       { label: 'tools', align: 'right' },
     ],
     filter: {
       page: 1,
       pageSize: 10,
       orderBy: '',
-      desc: true,
+      desc: false,
       name: '',
-      label: '',
-      moduleId: '',
     },
     reloadData: false,
   })
 
-  const { showModal, closeModal } = useModal()
+  // const { showModal, closeModal } = useModal()
 
   const handleChangePayload = (e: ChangeEvent<HTMLInputElement>): void => {
     setState(old => ({
@@ -56,9 +43,6 @@ export const useRole = ({ _roleService, deleteRef }: Props): any => {
         ...old.payload,
         id: '',
         name: '',
-        label: '',
-        order: 0,
-        moduleId: '',
       },
     }))
   }
@@ -103,55 +87,52 @@ export const useRole = ({ _roleService, deleteRef }: Props): any => {
         ...old.filter,
         page: 1,
         name: '',
-        label: '',
-        moduleId: '',
-        orderBy: '',
-        desc: true,
+        desc: false,
       },
     }))
   }
 
-  const handleEdit = (id: string): void => {
-    _roleService
-      .getById(id)
-      .then(res => {
-        setState(old => ({
-          ...old,
-          payload: {
-            ...old.payload,
-            id: res.id,
-            name: res.name,
-            label: res.label,
-            order: res.order,
-            moduleId: res.module.id,
-          },
-        }))
-        showModal()
-      })
-      .catch(e => {
-        handleClearPayload()
-        console.error(e.message)
-      })
-  }
+  // const handleEdit = (id: string): void => {
+  //   _getById
+  //     .execute(id)
+  //     .then(res => {
+  //       setState(old => ({
+  //         ...old,
+  //         payload: {
+  //           ...old.payload,
+  //           id: res.id,
+  //           name: res.name,
+  //           label: res.label,
+  //           order: res.order,
+  //           moduleId: res.module.id,
+  //         },
+  //       }))
+  //       showModal()
+  //     })
+  //     .catch(e => {
+  //       handleClearPayload()
+  //       console.error(e.message)
+  //     })
+  // }
 
-  const handleDelete = (): void => {
-    _roleService
-      .delete(state.toDelete)
-      .then(res => {
-        closeModal(deleteRef)
-        alert(`Role ${res.name} removed with success`)
-        setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
-      })
-      .catch(e => {
-        handleClearPayload()
-        console.error(e.message)
-      })
-  }
+  // const handleDelete = (): void => {
+  //   _delete
+  //     .execute(state.toDelete)
+  //     .then(res => {
+  //       closeModal(deleteRef)
+  //       alert(`Module ${res.name} removed with success`)
+  //       setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
+  //     })
+  //     .catch(e => {
+  //       handleClearPayload()
+  //       console.error(e.message)
+  //     })
+  // }
 
-  const handleConfirmDelete = (id: string): void => {
-    setState(old => ({ ...old, toDelete: id }))
-    showModal(deleteRef)
-  }
+  // const handleConfirmDelete = (id: string): void => {
+  //   setState(old => ({ ...old, toDelete: id }))
+  //   showModal(deleteRef)
+  // }
 
   useEffect(() => {
     const filter = {
@@ -165,38 +146,29 @@ export const useRole = ({ _roleService, deleteRef }: Props): any => {
     if (state.filter.name) {
       filter.name = state.filter.name
     }
-    if (state.filter.label) {
-      filter.label = state.filter.label
-    }
-    if (state.filter.moduleId) {
-      filter.moduleId = state.filter.moduleId
-    }
 
-    _roleService
-      .getAll(filter)
+    _getAll
+      .execute(filter)
       .then((res: any) => {
-        const rolesData = res.itens.map(row => {
+        const modulesData = res.itens.map(row => {
           return {
             values: [
               { value: row.name },
-              { value: row.label },
-              { align: 'right', value: row.order },
-              { align: 'center', value: row.module.name },
               {
                 align: 'right',
                 value: (
                   <Group align="right">
                     <Button
                       label="Edit"
-                      onClick={() => {
-                        handleEdit(row.id)
-                      }}
+                      // onClick={() => {
+                      //   handleEdit(row.id)
+                      // }}
                     />
                     <Button
                       label="Delete"
-                      onClick={() => {
-                        handleConfirmDelete(row.id)
-                      }}
+                      // onClick={() => {
+                      //   handleConfirmDelete(row.id)
+                      // }}
                     />
                   </Group>
                 ),
@@ -206,7 +178,7 @@ export const useRole = ({ _roleService, deleteRef }: Props): any => {
         })
         setState(old => ({
           ...old,
-          roles: { data: rolesData, total: +res.total },
+          modules: { data: modulesData, total: +res.total },
         }))
       })
       .catch(e => {
@@ -222,6 +194,6 @@ export const useRole = ({ _roleService, deleteRef }: Props): any => {
     handleClearFilter,
     handleChangePayload,
     handleClearPayload,
-    handleDelete,
+    // handleDelete,
   }
 }

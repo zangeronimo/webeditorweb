@@ -1,4 +1,4 @@
-import { type IMakeLogin } from '@/application/interface/makeLogin'
+import { type IMakeLogin } from '@/application/interface/system/makeLogin'
 import { useAuth } from '@/presentation/hooks/useAuth'
 import { type ChangeEvent, useState } from 'react'
 

@@ -1,4 +1,4 @@
-import { type IRoleService } from '@/application/interface/system/role'
+import { type ISaveRole } from '@/application/interface/saveRole'
 import { Button } from '@/presentation/components/form/button'
 import { Input } from '@/presentation/components/form/input'
 import { Select, type SelectData } from '@/presentation/components/form/select'
@@ -18,7 +18,7 @@ type Props = {
   handleClearPayload: () => void
   handleChangePayload: (e: FormEvent) => void
   data: Data
-  _roleService: IRoleService
+  _save: ISaveRole
 }
 
 export const Form = ({
@@ -26,14 +26,14 @@ export const Form = ({
   handleClearPayload,
   handleChangePayload,
   data,
-  _roleService,
+  _save,
 }: Props): JSX.Element => {
   const { closeModal } = useModal()
 
   const handleNewRole = (e: FormEvent): void => {
     e.preventDefault()
-    _roleService
-      .save(data)
+    _save
+      .execute(data)
       .then(res => {
         handleClearPayload()
         closeModal()

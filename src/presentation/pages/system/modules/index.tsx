@@ -3,27 +3,18 @@ import { DataTable } from '@/presentation/components/datatable'
 import { Pagination } from '@/presentation/components/datatable/pagination'
 import { Button } from '@/presentation/components/form/button'
 import { Input } from '@/presentation/components/form/input'
-import { Select, type SelectData } from '@/presentation/components/form/select'
 import { Group } from '@/presentation/components/group'
-import { Modal } from '@/presentation/components/modal'
 import { View } from '@/presentation/components/view'
 import { ViewBox } from '@/presentation/components/viewBox'
 import { useModal } from '@/presentation/hooks/useModal'
-import { useEffect, useRef, useState } from 'react'
-import { Form } from './form'
-import { useRole } from './role'
-import { Confirm } from '@/presentation/components/confirm'
-import { type IRoleService } from '@/application/interface/system/role'
+import { useModule } from './module'
 
 type Props = {
-  _moduleGetAll: IModuleGetAll
-  _roleService: IRoleService
+  _getAll: IModuleGetAll
 }
 
-export const Roles = ({ _roleService, _moduleGetAll }: Props): JSX.Element => {
-  const [modules, setModules] = useState<SelectData[]>([])
-  const { showModal, closeModal } = useModal()
-  const deleteRef = useRef()
+export const Modules = ({ _getAll }: Props): JSX.Element => {
+  const { showModal } = useModal()
   const {
     state,
     handleSubmit,
@@ -31,34 +22,16 @@ export const Roles = ({ _roleService, _moduleGetAll }: Props): JSX.Element => {
     handleChangePage,
     handleChangeOrder,
     handleClearFilter,
-    handleChangePayload,
-    handleClearPayload,
-    handleDelete,
-  } = useRole({ _roleService, deleteRef })
-
-  useEffect(() => {
-    _moduleGetAll
-      .execute({ page: 1, pageSize: 999 })
-      .then(res => {
-        const items = res.itens.map(item => ({
-          label: item.name,
-          value: item.id,
-        }))
-        setModules(items)
-      })
-      .catch(e => {
-        console.error(e)
-      })
-  }, [])
+  } = useModule({ _getAll })
 
   return (
     <View>
-      <Modal title="Add new Role" onClose={handleClearPayload}>
+      {/* <Modal title="Add new Role" onClose={handleClearPayload}>
         <Form
           modules={modules}
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}
-          _roleService={_roleService}
+          _save={_save}
           data={{
             id: state.payload.id,
             name: state.payload.name,
@@ -67,8 +40,8 @@ export const Roles = ({ _roleService, _moduleGetAll }: Props): JSX.Element => {
             moduleId: state.payload.moduleId,
           }}
         />
-      </Modal>
-      <Confirm
+      </Modal> */}
+      {/* <Confirm
         reference={deleteRef}
         title="Confirm"
         onConfirm={handleDelete}
@@ -76,8 +49,8 @@ export const Roles = ({ _roleService, _moduleGetAll }: Props): JSX.Element => {
           closeModal(deleteRef)
         }}
       >
-        <p>Are you sure to delete the role?</p>
-      </Confirm>
+        <p>Are you sure to delete the module?</p>
+      </Confirm> */}
       <ViewBox title="Filter">
         <form onSubmit={handleSubmit}>
           <Group>
@@ -86,19 +59,6 @@ export const Roles = ({ _roleService, _moduleGetAll }: Props): JSX.Element => {
               label="Name"
               value={state.filter.name}
               onChange={handleChangeFilter}
-            />
-            <Input
-              name="label"
-              label="Label"
-              value={state.filter.label}
-              onChange={handleChangeFilter}
-            />
-            <Select
-              name="moduleId"
-              label="Modules"
-              value={state.filter.moduleId}
-              onChange={handleChangeFilter}
-              data={[{ label: 'All', value: '' }, ...modules]}
             />
           </Group>
           <Group align="right">
@@ -113,20 +73,20 @@ export const Roles = ({ _roleService, _moduleGetAll }: Props): JSX.Element => {
       </ViewBox>
       <ViewBox title="Result">
         <Button
-          label="Add new role"
+          label="Add new module"
           onClick={() => {
             showModal()
           }}
         />
         <DataTable
           header={state.header}
-          data={state.roles.data}
+          data={state.modules.data}
           onOrder={(key: string) => {
             handleChangeOrder(key)
           }}
         />
         <Pagination
-          total={state.roles.total}
+          total={state.modules.total}
           perPage={state.filter.pageSize}
           currentPage={state.filter.page}
           onPageChange={(page: number) => handleChangePage(page)}
