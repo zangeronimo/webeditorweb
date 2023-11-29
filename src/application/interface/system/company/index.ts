@@ -1,4 +1,4 @@
-import { type Company } from '@/domain/entity/company'
+import { type Company } from '@/domain/entity/system/company'
 
 export interface ICompanyService {
   getAll: (filter: any) => Promise<{ itens: Company[] }>

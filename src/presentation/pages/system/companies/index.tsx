@@ -13,8 +13,8 @@ import { useCompany } from './company'
 import { Confirm } from '@/presentation/components/confirm'
 import { type IModuleService } from '@/application/interface/system/module'
 import { type ICompanyService } from '@/application/interface/system/company'
-import { type Module } from '@/domain/entity/module'
-import { Company } from '@/domain/entity/company'
+import { type Module } from '@/domain/entity/system/module'
+import { Company } from '@/domain/entity/system/company'
 
 type Props = {
   _moduleService: IModuleService

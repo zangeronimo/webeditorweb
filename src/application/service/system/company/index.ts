@@ -1,6 +1,6 @@
 import { type IHttpProvider } from '@/application/interface/httpProvider'
 import { type ICompanyService } from '@/application/interface/system/company'
-import { Company } from '@/domain/entity/company'
+import { Company } from '@/domain/entity/system/company'
 
 export class CompanyService implements ICompanyService {
   constructor(readonly http: IHttpProvider) {}

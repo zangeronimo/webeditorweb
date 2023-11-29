@@ -1,4 +1,4 @@
-import { type Role } from '@/domain/entity/role'
+import { type Role } from '@/domain/entity/system/role'
 
 export interface IRoleService {
   getAll: (filter: any) => Promise<{ itens: Role[] }>

@@ -1,6 +1,6 @@
 import { type IHttpProvider } from '@/application/interface/httpProvider'
 import { type IModuleService } from '@/application/interface/system/module'
-import { Module } from '@/domain/entity/module'
+import { Module } from '@/domain/entity/system/module'
 
 export class ModuleService implements IModuleService {
   constructor(readonly http: IHttpProvider) {}

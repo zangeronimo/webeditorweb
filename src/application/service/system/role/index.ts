@@ -1,7 +1,7 @@
 import { type IHttpProvider } from '@/application/interface/httpProvider'
 import { type IRoleService } from '@/application/interface/system/role'
-import { Module } from '@/domain/entity/module'
-import { Role } from '@/domain/entity/role'
+import { Module } from '@/domain/entity/system/module'
+import { Role } from '@/domain/entity/system/role'
 
 export class RoleService implements IRoleService {
   constructor(readonly http: IHttpProvider) {}
