@@ -30,7 +30,7 @@ export const Form = ({
 }: Props): JSX.Element => {
   const { closeModal } = useModal()
 
-  const handleNewRole = (e: FormEvent): void => {
+  const handleNewRegister = (e: FormEvent): void => {
     e.preventDefault()
     _roleService
       .save(data)
@@ -44,7 +44,7 @@ export const Form = ({
   }
 
   return (
-    <form onSubmit={handleNewRole}>
+    <form onSubmit={handleNewRegister}>
       <Input label="id" name="id" defaultValue={data.id} hidden />
       <Input
         name="name"
