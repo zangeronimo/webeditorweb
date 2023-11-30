@@ -35,6 +35,7 @@
     "@typescript-eslint/no-expliciti-any": "off",
     "@typescript-eslint/prefer-nullish-coalescing": "off",
     "@typescript-eslint/strict-boolean-expressions": "off",
+    "@typescript-eslint/no-extraneous-class": "off",
     "react/jsx-filename-extension": [
       1,
       {

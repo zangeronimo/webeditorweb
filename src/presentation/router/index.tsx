@@ -2,15 +2,15 @@ import { LoginFactory } from '@/application/factory/system/login'
 import { Route, Routes } from 'react-router-dom'
 import { Dashboard } from '../pages/system/dashboard'
 import { AuthenticatedUrl } from './authenticatedUrl'
-import { Users } from '../pages/webeditor/users'
 import { PageNotFound } from '../pages/system/_404'
 import { RoleFactory } from '@/application/factory/system/role'
 import { ModuleFactory } from '@/application/factory/system/module'
 import { CompanyFactory } from '@/application/factory/system/company'
+import { UserFactory } from '@/application/factory/webeditor/user'
 
 const routes = [
   { path: '/', element: <Dashboard />, private: true },
-  { path: '/webeditor/user', element: <Users />, private: true },
+  { path: '/webeditor/user', element: <UserFactory />, private: true },
   { path: '/administrator/role', element: <RoleFactory />, private: true },
   { path: '/administrator/module', element: <ModuleFactory />, private: true },
   {
