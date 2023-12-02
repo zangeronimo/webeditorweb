@@ -15,4 +15,12 @@
   &[data-align='right'] {
     justify-content: flex-end;
   }
+
+  &[data-direction='row'] {
+    flex-direction: row;
+  }
+
+  &[data-direction='column'] {
+    flex-direction: column;
+  }
 }

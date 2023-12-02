@@ -12,16 +12,16 @@ import { Form } from './form'
 import { useUser } from './user'
 import { Confirm } from '@/presentation/components/confirm'
 import { type IUserService } from '@/application/interface/webeditor/user'
-import { type IRoleService } from '@/application/interface/system/role'
-import { type Role } from '@/domain/entity/system/role'
+import { type IModuleService } from '@/application/interface/system/module'
+import { type Module } from '@/domain/entity/system/module'
 
 type Props = {
   _userService: IUserService
-  _roleService: IRoleService
+  _moduleService: IModuleService
 }
 
-export const Users = ({ _userService, _roleService }: Props): JSX.Element => {
-  const [roles, setRoles] = useState<Role[]>([])
+export const Users = ({ _userService, _moduleService }: Props): JSX.Element => {
+  const [modules, setModules] = useState<Module[]>([])
   const { showModal, closeModal } = useModal()
   const deleteRef = useRef()
   const {
@@ -37,10 +37,10 @@ export const Users = ({ _userService, _roleService }: Props): JSX.Element => {
   } = useUser({ _userService, deleteRef })
 
   useEffect(() => {
-    _roleService
-      .getAll({ page: 1, pageSize: 999 })
+    _moduleService
+      .getAllByCompany()
       .then(res => {
-        setRoles(res.itens)
+        setModules(res)
       })
       .catch(e => {
         console.error(e)
@@ -51,7 +51,7 @@ export const Users = ({ _userService, _roleService }: Props): JSX.Element => {
     <View>
       <Modal title="Add new User" onClose={handleClearPayload}>
         <Form
-          roles={roles}
+          modules={modules}
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}
           _userService={_userService}

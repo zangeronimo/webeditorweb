@@ -1,6 +1,5 @@
 import { type IUserService } from '@/application/interface/webeditor/user'
 import { type User } from '@/domain/entity/webeditor/user'
-import { type Role } from '@/domain/entity/system/role'
 import { Button } from '@/presentation/components/form/button'
 import { Input } from '@/presentation/components/form/input'
 import { Group } from '@/presentation/components/group'
@@ -8,7 +7,7 @@ import { useModal } from '@/presentation/hooks/useModal'
 import { useState, type FormEvent } from 'react'
 
 type Props = {
-  roles: Role[]
+  modules: any[]
   handleClearPayload: () => void
   handleChangePayload: (e: FormEvent) => void
   data: User
@@ -16,7 +15,7 @@ type Props = {
 }
 
 export const Form = ({
-  roles,
+  modules,
   handleClearPayload,
   handleChangePayload,
   data,
@@ -69,19 +68,26 @@ export const Form = ({
         onChange={handleChangePayload}
       />
       <h2>Roles</h2>
-      <Group>
-        {roles.map(role => (
-          <div key={role.id}>
-            <input
-              type="checkbox"
-              name="roles"
-              value={role.id}
-              checked={data.hasRole(role.id)}
-              onChange={e => {
-                handleCheckboxChange(e.currentTarget.value)
-              }}
-            />
-            {role.name}
+      <Group direction="column">
+        {modules?.map(module => (
+          <div key={module.id}>
+            {module.name}
+            <Group>
+              {module.roles?.map(role => (
+                <div key={role.id}>
+                  <input
+                    type="checkbox"
+                    name="modules"
+                    value={role.id}
+                    checked={data.hasRole(role.id)}
+                    onChange={e => {
+                      handleCheckboxChange(e.currentTarget.value)
+                    }}
+                  />
+                  {role.label}
+                </div>
+              ))}
+            </Group>
           </div>
         ))}
       </Group>

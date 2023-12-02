@@ -1,9 +1,38 @@
 import { type IHttpProvider } from '@/application/interface/httpProvider'
 import { type IModuleService } from '@/application/interface/system/module'
+import { ModuleWithRoleByCompanyDto } from '@/domain/dto/moduleWithRoleByCompanyDto/indext'
+import { RoleDto } from '@/domain/dto/roleDto'
 import { Module } from '@/domain/entity/system/module'
 
 export class ModuleService implements IModuleService {
   constructor(readonly http: IHttpProvider) {}
+
+  getAllByCompany = async (): Promise<ModuleWithRoleByCompanyDto[]> => {
+    return await this.http
+      .get('/module/get-all-by-company', null)
+      .then(async (res: any) => {
+        const result = res.map(
+          module =>
+            new ModuleWithRoleByCompanyDto(
+              module.Id,
+              module.Name,
+              module.Roles?.map(
+                role =>
+                  new RoleDto(
+                    role.Id,
+                    role.Name,
+                    role.Label,
+                    role.Order,
+                    role.ModuleId,
+                  ),
+              ),
+            ),
+        )
+        return await Promise.resolve(result)
+      })
+      .catch(async e => await Promise.reject(new Error(e.response.data)))
+  }
+
   getAll = async (filter: any): Promise<{ itens: Module[] }> => {
     return await this.http
       .get('/module', filter)
