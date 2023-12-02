@@ -8,11 +8,12 @@ describe('validate Password', () => {
     expect(password.value).toEqual(value)
   })
 
-  test("Can't create an invalid password", () => {
+  test('Verify if the created password is invalid', () => {
     const value = '12345'
-    expect(() => new Password(value)).toThrow(
-      new RegExp(Messages.passwordMinSize, 'g'),
-    )
+    const password = new Password(value)
+    expect(() => {
+      password.validate()
+    }).toThrow(new RegExp(Messages.passwordMinSize, 'g'))
   })
 
   test('Compare password with an equal compare', () => {
