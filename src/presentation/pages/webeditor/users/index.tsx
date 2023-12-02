@@ -14,7 +14,6 @@ import { Confirm } from '@/presentation/components/confirm'
 import { type IUserService } from '@/application/interface/webeditor/user'
 import { type IRoleService } from '@/application/interface/system/role'
 import { type Role } from '@/domain/entity/system/role'
-import { User } from '@/domain/entity/webeditor/user'
 
 type Props = {
   _userService: IUserService
@@ -56,14 +55,7 @@ export const Users = ({ _userService, _roleService }: Props): JSX.Element => {
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}
           _userService={_userService}
-          data={
-            new User(
-              state.payload.id,
-              state.payload.name,
-              state.payload.email,
-              state.payload.roles,
-            )
-          }
+          data={state.payload}
         />
       </Modal>
       <Confirm

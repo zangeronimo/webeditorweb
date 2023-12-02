@@ -45,7 +45,7 @@ export const Form = ({
   }
 
   return (
-    <form onSubmit={handleNewRegister}>
+    <form onSubmit={handleNewRegister} autoComplete="off">
       <Input label="id" name="id" defaultValue={data.id} hidden />
       <Input
         name="name"
@@ -65,6 +65,7 @@ export const Form = ({
         name="password"
         label="Password"
         value={data.password}
+        autoComplete="new-password"
         onChange={handleChangePayload}
       />
       <h2>Roles</h2>

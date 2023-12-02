@@ -1,11 +1,9 @@
 import { Messages } from '@/domain/messages'
 
 export class Password {
-  constructor(readonly value: string) {
-    this.validate()
-  }
+  constructor(readonly value: string) {}
 
-  private readonly validate = (): void => {
+  public readonly validate = (): void => {
     if (this.value.length <= 5) {
       throw new Error(Messages.passwordMinSize)
     }

@@ -16,7 +16,7 @@ export const useLogin = (): Output => {
   const { login } = useAuth()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
-    if (e?.target?.name && e?.target?.value)
+    if (e?.target)
       setState(old => ({ ...old, [e.target.name]: e.target.value }))
   }
 

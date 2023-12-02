@@ -27,13 +27,13 @@ export const Login = ({ _makeLogin }: Props): JSX.Element => {
 
   return (
     <View className={Styles.container}>
-      <form onSubmit={handleLogin}>
+      <form autoComplete="off" onSubmit={handleLogin}>
         <View className={Styles.form}>
           <p>WEBEditor - Login</p>
           <Input
             label="E-mail:"
             name="username"
-            defaultValue={state.username}
+            value={state.username}
             onChange={e => {
               onChange(e)
             }}
@@ -42,7 +42,8 @@ export const Login = ({ _makeLogin }: Props): JSX.Element => {
             label="Senha:"
             type="password"
             name="password"
-            defaultValue={state.password}
+            value={state.password}
+            autoComplete="new-password"
             onChange={e => {
               onChange(e)
             }}

@@ -44,16 +44,15 @@ export class UserService implements IUserService {
           id: payload.id,
           name: payload.name,
           email: payload.email,
-          password: payload.password?.value,
+          password: payload.password,
           roles: payload.roles.map(id => ({ id })),
         })
     } else {
-      console.log(payload)
       request = async () =>
         await this.http.post('/user', {
           name: payload.name,
           email: payload.email,
-          password: payload.password?.value,
+          password: payload.password,
           roles: payload.roles.map(id => ({ id })),
         })
     }

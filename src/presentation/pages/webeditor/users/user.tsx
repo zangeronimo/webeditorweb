@@ -1,4 +1,5 @@
 import { type IUserService } from '@/application/interface/webeditor/user'
+import { User } from '@/domain/entity/webeditor/user'
 import { Button } from '@/presentation/components/form/button'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
@@ -18,7 +19,7 @@ type Props = {
 export const useUser = ({ _userService, deleteRef }: Props): any => {
   const [state, setState] = useState({
     toDelete: '',
-    payload: { id: '', name: '', email: '', password: '', roles: [] },
+    payload: new User('', '', '', []),
     users: { data: [], total: 0 },
     header: [
       { label: 'name', align: 'left', order: 'name' },
@@ -39,9 +40,11 @@ export const useUser = ({ _userService, deleteRef }: Props): any => {
   const { showModal, closeModal } = useModal()
 
   const handleChangePayload = (e: ChangeEvent<HTMLInputElement>): void => {
+    const user = state.payload
+    user[e.target.name] = e.target.value
     setState(old => ({
       ...old,
-      payload: { ...old.payload, [e.target.name]: e.target.value },
+      payload: user,
     }))
   }
 
@@ -49,14 +52,7 @@ export const useUser = ({ _userService, deleteRef }: Props): any => {
     setState(old => ({
       ...old,
       reloadData: !old.reloadData,
-      payload: {
-        ...old.payload,
-        id: '',
-        name: '',
-        email: '',
-        password: '',
-        roles: [],
-      },
+      payload: new User('', '', '', []),
     }))
   }
 
@@ -111,15 +107,10 @@ export const useUser = ({ _userService, deleteRef }: Props): any => {
     _userService
       .getById(id)
       .then(res => {
+        const user = new User(res.id, res.name, res.email, res.roles)
         setState(old => ({
           ...old,
-          payload: {
-            ...old.payload,
-            id: res.id,
-            name: res.name,
-            email: res.email,
-            roles: res.roles,
-          },
+          payload: user,
         }))
         showModal()
       })
