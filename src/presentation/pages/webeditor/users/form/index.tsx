@@ -45,30 +45,32 @@ export const Form = ({
 
   return (
     <form onSubmit={handleNewRegister} autoComplete="off">
-      <Input label="id" name="id" defaultValue={data.id} hidden />
-      <Input
-        name="name"
-        label="Name"
-        value={data.name}
-        onChange={handleChangePayload}
-      />
-      <Input
-        type="email"
-        name="email"
-        label="Email"
-        value={data.email}
-        onChange={handleChangePayload}
-      />
-      <Input
-        type="password"
-        name="password"
-        label="Password"
-        value={data.password}
-        autoComplete="new-password"
-        onChange={handleChangePayload}
-      />
-      <h2>Roles</h2>
+      <Group>
+        <input id="id" name="id" defaultValue={data.id} hidden />
+        <Input
+          name="name"
+          label="Name"
+          value={data.name}
+          onChange={handleChangePayload}
+        />
+        <Input
+          type="email"
+          name="email"
+          label="Email"
+          value={data.email}
+          onChange={handleChangePayload}
+        />
+        <Input
+          type="password"
+          name="password"
+          label="Password"
+          value={data.password}
+          autoComplete="new-password"
+          onChange={handleChangePayload}
+        />
+      </Group>
       <Group direction="column">
+        <h2>Roles</h2>
         {modules?.map(module => (
           <div key={module.id}>
             {module.name}
@@ -91,7 +93,9 @@ export const Form = ({
           </div>
         ))}
       </Group>
-      <Button type="submit" label="Save" />
+      <Group align="right">
+        <Button type="submit" label="Save" />
+      </Group>
     </form>
   )
 }

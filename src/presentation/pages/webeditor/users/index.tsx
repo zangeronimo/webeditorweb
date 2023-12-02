@@ -66,7 +66,9 @@ export const Users = ({ _userService, _moduleService }: Props): JSX.Element => {
           closeModal(deleteRef)
         }}
       >
-        <p>Are you sure to delete the user?</p>
+        <Group>
+          <p>Are you sure to delete the user?</p>
+        </Group>
       </Confirm>
       <ViewBox title="Filter">
         <form onSubmit={handleSubmit}>

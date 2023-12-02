@@ -16,8 +16,8 @@ export const Group = ({
   return (
     <div
       className={Styles.containter}
-      data-align={align}
       data-direction={direction}
+      data-align={align}
     >
       {children}
     </div>
