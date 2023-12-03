@@ -57,7 +57,7 @@ export const Form = ({
       />
       <h2>Modules</h2>
       <Group>
-        {modules.map(module => (
+        {modules?.map(module => (
           <div key={module.id}>
             <input
               type="checkbox"

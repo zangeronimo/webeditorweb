@@ -6,20 +6,22 @@ export class UserService implements IUserService {
   constructor(readonly http: IHttpProvider) {}
   getAll = async (filter: any): Promise<{ itens: User[] }> => {
     return await this.http
-      .get('/user', filter)
+      .get('/user', { params: filter })
       .then(async (res: any) => {
-        const users: User[] = res.itens.map(
+        const users: User[] = res.itens?.map(
           item =>
             new User(
               item.Id,
               item.Name,
               item.Email,
-              item.Roles.map(role => role.Id),
+              item.Roles?.map(role => role.Id),
             ),
         )
         return await Promise.resolve({ itens: users, total: res.total })
       })
-      .catch(async e => await Promise.reject(new Error(e.response.data)))
+      .catch(async e => {
+        return await Promise.reject(new Error(e.response.data))
+      })
   }
 
   getById = async (id: string): Promise<User> => {
@@ -30,7 +32,7 @@ export class UserService implements IUserService {
           res.Id,
           res.Name,
           res.Email,
-          res.Roles.map(role => role.Id),
+          res.Roles?.map(role => role.Id),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
@@ -45,7 +47,7 @@ export class UserService implements IUserService {
           name: payload.name,
           email: payload.email,
           password: payload.password,
-          roles: payload.roles.map(id => ({ id })),
+          roles: payload.roles?.map(id => ({ id })),
         })
     } else {
       request = async () =>
@@ -53,7 +55,7 @@ export class UserService implements IUserService {
           name: payload.name,
           email: payload.email,
           password: payload.password,
-          roles: payload.roles.map(id => ({ id })),
+          roles: payload.roles?.map(id => ({ id })),
         })
     }
     return request()
@@ -69,7 +71,7 @@ export class UserService implements IUserService {
           res.Id,
           res.Name,
           res.Email,
-          res.Roles.map(role => role.Id),
+          res.Roles?.map(role => role.Id),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))

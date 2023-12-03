@@ -27,7 +27,7 @@ export const DataTable = ({ header, data, onOrder }: Props): JSX.Element => {
     <table className={Styles.container} cellSpacing="0" cellPadding="0">
       <thead>
         <tr className={Styles.header}>
-          {header.map((item, i) => {
+          {header?.map((item, i) => {
             const align = item.align ?? 'center'
             const styles = `${Styles[align]}`
             return (
@@ -48,9 +48,9 @@ export const DataTable = ({ header, data, onOrder }: Props): JSX.Element => {
         </tr>
       </thead>
       <tbody className={Styles.body}>
-        {data.map((row, i) => (
+        {data?.map((row, i) => (
           <tr key={i}>
-            {row.values.map((item, y) => {
+            {row.values?.map((item, y) => {
               const align = item.align ?? 'left'
               const styles = `${Styles[align]}`
               return (

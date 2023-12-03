@@ -158,7 +158,7 @@ export const useCompany = ({ _companyService, deleteRef }: Props): any => {
     _companyService
       .getAll(filter)
       .then((res: any) => {
-        const companiesData = res.itens.map(row => {
+        const companiesData = res.itens?.map(row => {
           return {
             values: [
               { value: row.name },

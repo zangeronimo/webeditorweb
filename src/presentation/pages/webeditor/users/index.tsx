@@ -43,7 +43,7 @@ export const Users = ({ _userService, _moduleService }: Props): JSX.Element => {
         setModules(res)
       })
       .catch(e => {
-        console.error(e)
+        console.error(e.message)
       })
   }, [])
 

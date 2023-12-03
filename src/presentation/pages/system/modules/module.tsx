@@ -155,7 +155,7 @@ export const useModule = ({ _moduleService, deleteRef }: Props): any => {
     _moduleService
       .getAll(filter)
       .then((res: any) => {
-        const modulesData = res.itens.map(row => {
+        const modulesData = res.itens?.map(row => {
           return {
             values: [
               { value: row.name },

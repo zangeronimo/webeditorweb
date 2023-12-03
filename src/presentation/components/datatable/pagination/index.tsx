@@ -14,7 +14,7 @@ const siblingsCount = 1
 
 const generatePagesArray = (from: number, to: number): number[] =>
   [...new Array(to - from)]
-    .map((_, index) => from + index + 1)
+    ?.map((_, index) => from + index + 1)
     .filter(page => page > 0)
 
 export const Pagination = ({
@@ -52,7 +52,7 @@ export const Pagination = ({
         )}
 
         {previousPages.length > 0 &&
-          previousPages.map(page => (
+          previousPages?.map(page => (
             <Fragment key={page}>
               <PaginationItem onPageChange={onPageChange} number={page} />
               {currentPage > 2 + siblingsCount && <span>...</span>}
@@ -66,7 +66,7 @@ export const Pagination = ({
         />
 
         {nextPages.length > 0 &&
-          nextPages.map(page => (
+          nextPages?.map(page => (
             <PaginationItem
               onPageChange={onPageChange}
               key={page}

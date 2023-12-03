@@ -7,7 +7,7 @@ export class Company {
     modules: string[],
   ) {
     const setOfModules = new Set<string>()
-    modules.map(module => setOfModules.add(module))
+    modules?.map(module => setOfModules.add(module))
     this._modules = setOfModules
   }
 

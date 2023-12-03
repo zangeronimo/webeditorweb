@@ -9,9 +9,9 @@ export class ModuleService implements IModuleService {
 
   getAllByCompany = async (): Promise<ModuleWithRoleByCompanyDto[]> => {
     return await this.http
-      .get('/module/get-all-by-company', null)
+      .get('/module/get-all-by-company')
       .then(async (res: any) => {
-        const result = res.map(
+        const result = res?.map(
           module =>
             new ModuleWithRoleByCompanyDto(
               module.Id,
@@ -35,14 +35,16 @@ export class ModuleService implements IModuleService {
 
   getAll = async (filter: any): Promise<{ itens: Module[] }> => {
     return await this.http
-      .get('/module', filter)
+      .get('/module', { params: filter })
       .then(async (res: any) => {
-        const modules: Module[] = res.itens.map(
+        const modules: Module[] = res.itens?.map(
           item => new Module(item.Id, item.Name),
         )
         return await Promise.resolve({ itens: modules, total: res.total })
       })
-      .catch(async e => await Promise.reject(new Error(e.response.data)))
+      .catch(async e => {
+        return await Promise.reject(new Error(e.response.data))
+      })
   }
 
   getById = async (id: string): Promise<Module> => {

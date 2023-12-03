@@ -6,14 +6,14 @@ export class CompanyService implements ICompanyService {
   constructor(readonly http: IHttpProvider) {}
   getAll = async (filter: any): Promise<{ itens: Company[] }> => {
     return await this.http
-      .get('/company', filter)
+      .get('/company', { params: filter })
       .then(async (res: any) => {
-        const companies: Company[] = res.itens.map(
+        const companies: Company[] = res.itens?.map(
           item =>
             new Company(
               item.Id,
               item.Name,
-              item.Modules.map(module => module.Id),
+              item.Modules?.map(module => module.Id),
             ),
         )
         return await Promise.resolve({ itens: companies, total: res.total })
@@ -28,7 +28,7 @@ export class CompanyService implements ICompanyService {
         return new Company(
           res.Id,
           res.Name,
-          res.Modules.map(module => module.Id),
+          res.Modules?.map(module => module.Id),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
@@ -41,13 +41,13 @@ export class CompanyService implements ICompanyService {
         await this.http.put(`/company/${payload.id}`, {
           id: payload.id,
           name: payload.name,
-          modules: payload.modules.map(id => ({ id })),
+          modules: payload.modules?.map(id => ({ id })),
         })
     } else {
       request = async () =>
         await this.http.post('/company', {
           name: payload.name,
-          modules: payload.modules.map(id => ({ id })),
+          modules: payload.modules?.map(id => ({ id })),
         })
     }
     return request()
@@ -62,7 +62,7 @@ export class CompanyService implements ICompanyService {
         return new Company(
           res.Id,
           res.Name,
-          res.Modules.map(module => module.Id),
+          res.Modules?.map(module => module.Id),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))

@@ -11,7 +11,7 @@ export class User {
     roles: string[],
   ) {
     const setOfRoles = new Set<string>()
-    roles.map(role => setOfRoles.add(role))
+    roles?.map(role => setOfRoles.add(role))
     this._roles = setOfRoles
   }
 

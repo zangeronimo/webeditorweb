@@ -25,7 +25,7 @@ export const Select = ({
     <div className={Styles.container}>
       <label htmlFor={name}>{label}</label>
       <select id={name} name={name} {...rest}>
-        {data.map((item, i) => (
+        {data?.map((item, i) => (
           <option key={i} value={item.value}>
             {item.label}
           </option>

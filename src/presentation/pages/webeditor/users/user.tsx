@@ -158,7 +158,7 @@ export const useUser = ({ _userService, deleteRef }: Props): any => {
     _userService
       .getAll(filter)
       .then((res: any) => {
-        const usersData = res.itens.map(row => {
+        const usersData = res.itens?.map(row => {
           return {
             values: [
               { value: row.name },

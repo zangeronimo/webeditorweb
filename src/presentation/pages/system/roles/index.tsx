@@ -40,14 +40,14 @@ export const Roles = ({ _roleService, _moduleService }: Props): JSX.Element => {
     _moduleService
       .getAll({ page: 1, pageSize: 999 })
       .then(res => {
-        const items = res.itens.map(item => ({
+        const items = res.itens?.map(item => ({
           label: item.name,
           value: item.id,
         }))
         setModules(items)
       })
       .catch(e => {
-        console.error(e)
+        console.error(e.message)
       })
   }, [])
 

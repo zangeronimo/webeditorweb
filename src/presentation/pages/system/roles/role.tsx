@@ -175,7 +175,7 @@ export const useRole = ({ _roleService, deleteRef }: Props): any => {
     _roleService
       .getAll(filter)
       .then((res: any) => {
-        const rolesData = res.itens.map(row => {
+        const rolesData = res.itens?.map(row => {
           return {
             values: [
               { value: row.name },

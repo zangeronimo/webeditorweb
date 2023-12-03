@@ -7,9 +7,9 @@ export class RoleService implements IRoleService {
   constructor(readonly http: IHttpProvider) {}
   getAll = async (filter: any): Promise<{ itens: Role[] }> => {
     return await this.http
-      .get('/role', filter)
+      .get('/role', { params: filter })
       .then(async (res: any) => {
-        const roles: Role[] = res.itens.map(
+        const roles: Role[] = res.itens?.map(
           item =>
             new Role(
               item.Id,

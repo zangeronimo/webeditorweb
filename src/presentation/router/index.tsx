@@ -24,7 +24,7 @@ export const Router = (): JSX.Element => {
   return (
     <Routes>
       <Route path="/auth" element={<LoginFactory />} />
-      {routes.map(route => (
+      {routes?.map(route => (
         <Route
           key={route.path}
           path={route.path}
