@@ -11,9 +11,9 @@ export class CompanyService implements ICompanyService {
         const companies: Company[] = res.itens?.map(
           item =>
             new Company(
-              item.Id,
-              item.Name,
-              item.Modules?.map(module => module.Id),
+              item.id,
+              item.name,
+              item.modules?.map(module => module.id),
             ),
         )
         return await Promise.resolve({ itens: companies, total: res.total })
@@ -26,9 +26,9 @@ export class CompanyService implements ICompanyService {
       .get(`/company/${id}`)
       .then(async (res: any) => {
         return new Company(
-          res.Id,
-          res.Name,
-          res.Modules?.map(module => module.Id),
+          res.id,
+          res.name,
+          res.modules?.map(module => module.id),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
@@ -60,9 +60,9 @@ export class CompanyService implements ICompanyService {
       .delete(`/company/${id}`)
       .then(async (res: any) => {
         return new Company(
-          res.Id,
-          res.Name,
-          res.Modules?.map(module => module.Id),
+          res.id,
+          res.name,
+          res.modules?.map(module => module.id),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))

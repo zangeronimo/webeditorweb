@@ -5,7 +5,7 @@ export class RefreshToken implements IRefreshToken {
   constructor(readonly http: IHttpProvider) {}
   execute = async (): Promise<string> => {
     return await this.http
-      .post<{ Token: string }, { grant_type: string }>(
+      .post<{ token: string }, { grant_type: string }>(
         '/auth',
         {
           grant_type: 'refresh_token',
@@ -14,7 +14,7 @@ export class RefreshToken implements IRefreshToken {
           withCredentials: true,
         },
       )
-      .then(async res => await Promise.resolve(res.Token))
+      .then(async res => await Promise.resolve(res.token))
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
 }

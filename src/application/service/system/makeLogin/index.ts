@@ -6,7 +6,7 @@ export class MakeLogin implements IMakeLogin {
   execute = async (username: string, password: string): Promise<string> => {
     return await this.http
       .post<
-        { Token: string },
+        { token: string },
         { username: string; password: string; grant_type: string }
       >(
         '/auth',
@@ -20,7 +20,7 @@ export class MakeLogin implements IMakeLogin {
         },
       )
       .then(async res => {
-        return await Promise.resolve(res.Token)
+        return await Promise.resolve(res.token)
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }

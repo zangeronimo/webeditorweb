@@ -14,16 +14,16 @@ export class ModuleService implements IModuleService {
         const result = res?.map(
           module =>
             new ModuleWithRoleByCompanyDto(
-              module.Id,
-              module.Name,
-              module.Roles?.map(
+              module.id,
+              module.name,
+              module.roles?.map(
                 role =>
                   new RoleDto(
-                    role.Id,
-                    role.Name,
-                    role.Label,
-                    role.Order,
-                    role.ModuleId,
+                    role.id,
+                    role.name,
+                    role.label,
+                    role.order,
+                    role.moduleId,
                   ),
               ),
             ),
@@ -38,7 +38,7 @@ export class ModuleService implements IModuleService {
       .get('/module', { params: filter })
       .then(async (res: any) => {
         const modules: Module[] = res.itens?.map(
-          item => new Module(item.Id, item.Name),
+          item => new Module(item.id, item.name),
         )
         return await Promise.resolve({ itens: modules, total: res.total })
       })
@@ -51,7 +51,7 @@ export class ModuleService implements IModuleService {
     return await this.http
       .get(`/module/${id}`)
       .then(async (res: any) => {
-        return new Module(res.Id, res.Name)
+        return new Module(res.id, res.name)
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
@@ -79,7 +79,7 @@ export class ModuleService implements IModuleService {
     return await this.http
       .delete(`/module/${id}`)
       .then(async (res: any) => {
-        return new Module(res.Id, res.Name)
+        return new Module(res.id, res.name)
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }

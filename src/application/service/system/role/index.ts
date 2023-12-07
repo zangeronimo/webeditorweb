@@ -12,11 +12,11 @@ export class RoleService implements IRoleService {
         const roles: Role[] = res.itens?.map(
           item =>
             new Role(
-              item.Id,
-              item.Name,
-              item.Label,
-              item.Order,
-              new Module(item.Module.Id, item.Module.Name),
+              item.id,
+              item.name,
+              item.label,
+              item.order,
+              new Module(item.module.id, item.module.name),
             ),
         )
         return await Promise.resolve({ itens: roles, total: res.total })
@@ -29,11 +29,11 @@ export class RoleService implements IRoleService {
       .get(`/role/${id}`)
       .then(async (res: any) => {
         return new Role(
-          res.Id,
-          res.Name,
-          res.Label,
-          res.Order,
-          new Module(res.Module.Id, res.Module.Name),
+          res.id,
+          res.name,
+          res.label,
+          res.order,
+          new Module(res.module.id, res.module.name),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
@@ -69,11 +69,11 @@ export class RoleService implements IRoleService {
       .delete(`/role/${id}`)
       .then(async (res: any) => {
         return new Role(
-          res.Id,
-          res.Name,
-          res.Label,
-          res.Order,
-          new Module(res.Module.Id, res.Module.Name),
+          res.id,
+          res.name,
+          res.label,
+          res.order,
+          new Module(res.module.id, res.module.name),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))

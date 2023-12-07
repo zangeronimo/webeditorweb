@@ -11,10 +11,10 @@ export class UserService implements IUserService {
         const users: User[] = res.itens?.map(
           item =>
             new User(
-              item.Id,
-              item.Name,
-              item.Email,
-              item.Roles?.map(role => role.Id),
+              item.id,
+              item.name,
+              item.email,
+              item.roles?.map(role => role.id),
             ),
         )
         return await Promise.resolve({ itens: users, total: res.total })
@@ -29,10 +29,10 @@ export class UserService implements IUserService {
       .get(`/user/${id}`)
       .then(async (res: any) => {
         return new User(
-          res.Id,
-          res.Name,
-          res.Email,
-          res.Roles?.map(role => role.Id),
+          res.id,
+          res.name,
+          res.email,
+          res.roles?.map(role => role.id),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
@@ -68,10 +68,10 @@ export class UserService implements IUserService {
       .delete(`/user/${id}`)
       .then(async (res: any) => {
         return new User(
-          res.Id,
-          res.Name,
-          res.Email,
-          res.Roles?.map(role => role.Id),
+          res.id,
+          res.name,
+          res.email,
+          res.roles?.map(role => role.id),
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
