@@ -1,4 +1,5 @@
 import { type ITaskService } from '@/application/interface/timesheet/task'
+import { type Task } from '@/domain/entity/timesheet/task'
 import { Button } from '@/presentation/components/form/button'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
@@ -165,13 +166,6 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
     showModal(deleteRef)
   }
 
-  const formatSecondsToHours = (seconds: number): string => {
-    const hours = Math.floor(seconds / 3600)
-    const minutes = Math.floor((seconds - hours * 3600) / 60)
-    const sec = seconds - hours * 3600 - minutes * 60
-    return `${hours}:${minutes}:${sec}`
-  }
-
   useEffect(() => {
     const filter = {
       page: state.filter.page,
@@ -193,7 +187,7 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
 
     _taskService
       .getAll(filter)
-      .then((res: any) => {
+      .then((res: { itens: Task[]; total: number }) => {
         let working = ''
         const tasksData = res.itens?.map(row => {
           if (row.working) working = row.id
@@ -201,7 +195,7 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
             values: [
               { value: row.name },
               { value: row.pbi.name },
-              { value: formatSecondsToHours(row.totalInSeconds) },
+              { value: row.totalInSeconds.formatToHours() },
               { align: 'right', value: row.status },
               {
                 align: 'right',
