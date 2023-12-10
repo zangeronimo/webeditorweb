@@ -23,6 +23,8 @@ export class TaskService implements ITaskService {
                 item.pbi.status,
                 item.pbi.epic,
               ),
+              item.totalInHours,
+              item.working,
             ),
         )
         return await Promise.resolve({ itens: tasks, total: res.total })
@@ -46,9 +48,19 @@ export class TaskService implements ITaskService {
             res.pbi.status,
             res.pbi.epic,
           ),
+          res.totalInHours,
+          res.working,
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
+  }
+
+  registerWork = async (id: string): Promise<void> => {
+    await this.http
+      .patch(`/timesheet/task/register-work/${id}`)
+      .catch(async e => {
+        await Promise.reject(new Error(e.response.data))
+      })
   }
 
   save = async (payload: any): Promise<Task> => {
@@ -86,6 +98,8 @@ export class TaskService implements ITaskService {
               res.pbi.status,
               res.pbi.epic,
             ),
+            0,
+            false,
           ),
       )
       .catch(async e => await Promise.reject(new Error(e.response.data)))
@@ -107,6 +121,8 @@ export class TaskService implements ITaskService {
             res.pbi.status,
             res.pbi.epic,
           ),
+          0,
+          false,
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
