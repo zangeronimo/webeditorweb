@@ -22,71 +22,20 @@ export const Sidebar = (): JSX.Element => {
         <li>
           <span
             onClick={() => {
-              openMenu('recipe')
+              openMenu('timesheet')
             }}
           >
-            Recipes
-            {state.opened === 'recipe' && (
+            TimeSheet
+            {state.opened === 'timesheet' && (
               <ul className={Styles.sub}>
                 <li>
-                  <Link to="/recipe/rate" title="Rates">
-                    Rates
+                  <Link to="/timesheet/clients" title="Clients">
+                    Clients
                   </Link>
                 </li>
                 <li>
-                  <Link to="/recipe/category" title="Categories">
-                    Categories
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/recipe/level" title="Levels">
-                    Levels
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/recipe/recipe" title="Recipes">
-                    Recipes
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </span>
-        </li>
-        <li>
-          <span
-            onClick={() => {
-              openMenu('marketing')
-            }}
-          >
-            Marketing
-            {state.opened === 'marketing' && (
-              <ul className={Styles.sub}>
-                <li>
-                  <Link to="/marketing/category" title="Categories">
-                    Categories
-                  </Link>
-                </li>
-                <li>
-                  <Link to="/marketing/product" title="Products">
-                    Products
-                  </Link>
-                </li>
-              </ul>
-            )}
-          </span>
-        </li>
-        <li>
-          <span
-            onClick={() => {
-              openMenu('institutional')
-            }}
-          >
-            Institutional
-            {state.opened === 'institutional' && (
-              <ul className={Styles.sub}>
-                <li>
-                  <Link to="/institutional/page" title="Pages">
-                    Pages
+                  <Link to="/timesheet/projects" title="Projects">
+                    Projects
                   </Link>
                 </li>
               </ul>

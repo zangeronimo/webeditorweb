@@ -7,6 +7,8 @@ import { RoleFactory } from '@/application/factory/system/role'
 import { ModuleFactory } from '@/application/factory/system/module'
 import { CompanyFactory } from '@/application/factory/system/company'
 import { UserFactory } from '@/application/factory/webeditor/user'
+import { ClientFactory } from '@/application/factory/timesheet/client'
+import { ProjectFactory } from '@/application/factory/timesheet/project'
 
 const routes = [
   { path: '/', element: <Dashboard />, private: true },
@@ -16,6 +18,16 @@ const routes = [
   {
     path: '/administrator/company',
     element: <CompanyFactory />,
+    private: true,
+  },
+  {
+    path: '/timesheet/clients',
+    element: <ClientFactory />,
+    private: true,
+  },
+  {
+    path: '/timesheet/projects',
+    element: <ProjectFactory />,
     private: true,
   },
 ]
