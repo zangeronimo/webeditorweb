@@ -2,6 +2,7 @@ import { type IHttpProvider } from '@/application/interface/httpProvider'
 import { type ITaskService } from '@/application/interface/timesheet/task'
 import { Pbi } from '@/domain/entity/timesheet/pbi'
 import { Task } from '@/domain/entity/timesheet/task'
+import { Seconds } from '@/domain/valueObject/seconds'
 
 export class TaskService implements ITaskService {
   constructor(readonly http: IHttpProvider) {}
@@ -23,7 +24,7 @@ export class TaskService implements ITaskService {
                 item.pbi.status,
                 item.pbi.epic,
               ),
-              item.totalInHours,
+              new Seconds(item.totalInSeconds),
               item.working,
             ),
         )
@@ -48,7 +49,7 @@ export class TaskService implements ITaskService {
             res.pbi.status,
             res.pbi.epic,
           ),
-          res.totalInHours,
+          new Seconds(res.totalInSeconds),
           res.working,
         )
       })
@@ -98,7 +99,7 @@ export class TaskService implements ITaskService {
               res.pbi.status,
               res.pbi.epic,
             ),
-            0,
+            new Seconds(0),
             false,
           ),
       )
@@ -121,7 +122,7 @@ export class TaskService implements ITaskService {
             res.pbi.status,
             res.pbi.epic,
           ),
-          0,
+          new Seconds(0),
           false,
         )
       })

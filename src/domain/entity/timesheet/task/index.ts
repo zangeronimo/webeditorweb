@@ -1,3 +1,4 @@
+import { type Seconds } from '@/domain/valueObject/seconds'
 import { type Pbi } from '../pbi'
 
 export class Task {
@@ -7,7 +8,7 @@ export class Task {
     readonly description: string,
     readonly status: number,
     readonly pbi: Pbi,
-    readonly totalInHours: number,
+    readonly totalInSeconds: Seconds,
     readonly working: boolean,
   ) {}
 }

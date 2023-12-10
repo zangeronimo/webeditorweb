@@ -1,4 +1,5 @@
 import { type ITaskService } from '@/application/interface/timesheet/task'
+import { type Task } from '@/domain/entity/timesheet/task'
 import { Button } from '@/presentation/components/form/button'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
@@ -23,6 +24,7 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
     header: [
       { label: 'name', align: 'left', order: 'name' },
       { label: 'pbi', align: 'left' },
+      { label: 'time worked', align: 'right' },
       { label: 'status', align: 'right', order: 'status' },
       { label: 'tools', align: 'right' },
     ],
@@ -185,7 +187,7 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
 
     _taskService
       .getAll(filter)
-      .then((res: any) => {
+      .then((res: { itens: Task[]; total: number }) => {
         let working = ''
         const tasksData = res.itens?.map(row => {
           if (row.working) working = row.id
@@ -193,13 +195,16 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
             values: [
               { value: row.name },
               { value: row.pbi.name },
+              { value: row.totalInSeconds.formatToHours() },
               { align: 'right', value: row.status },
               {
                 align: 'right',
                 value: (
                   <Group align="right">
                     <Button
-                      disabled={!!working && working !== row.id}
+                      disabled={
+                        (!!working && working !== row.id) || row.status === 0
+                      }
                       label={row.working ? 'Stop' : 'Start'}
                       onClick={() => {
                         handleRegisterWork(row.id)
