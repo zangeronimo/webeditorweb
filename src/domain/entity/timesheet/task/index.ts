@@ -7,5 +7,7 @@ export class Task {
     readonly description: string,
     readonly status: number,
     readonly pbi: Pbi,
+    readonly totalInHours: number,
+    readonly working: boolean,
   ) {}
 }

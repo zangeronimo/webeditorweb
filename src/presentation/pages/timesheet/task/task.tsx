@@ -110,6 +110,18 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
     }))
   }
 
+  const handleRegisterWork = (id: string): void => {
+    _taskService
+      .registerWork(id)
+      .then(() => {
+        setState(old => ({ ...old, reloadData: !old.reloadData }))
+      })
+      .catch(e => {
+        handleClearPayload()
+        console.error(e.message)
+      })
+  }
+
   const handleEdit = (id: string): void => {
     _taskService
       .getById(id)
@@ -174,7 +186,9 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
     _taskService
       .getAll(filter)
       .then((res: any) => {
+        let working = ''
         const tasksData = res.itens?.map(row => {
+          if (row.working) working = row.id
           return {
             values: [
               { value: row.name },
@@ -184,6 +198,13 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
                 align: 'right',
                 value: (
                   <Group align="right">
+                    <Button
+                      disabled={!!working && working !== row.id}
+                      label={row.working ? 'Stop' : 'Start'}
+                      onClick={() => {
+                        handleRegisterWork(row.id)
+                      }}
+                    />
                     <Button
                       label="Edit"
                       onClick={() => {
@@ -202,6 +223,7 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
             ],
           }
         })
+
         setState(old => ({
           ...old,
           tasks: { data: tasksData, total: +res.total },
