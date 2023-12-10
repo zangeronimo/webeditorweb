@@ -1,4 +1,4 @@
-import { type IProjectService } from '@/application/interface/timesheet/project'
+import { type ITaskService } from '@/application/interface/timesheet/task'
 import { Button } from '@/presentation/components/form/button'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
@@ -11,18 +11,18 @@ import {
 } from 'react'
 
 type Props = {
-  _projectService: IProjectService
+  _taskService: ITaskService
   deleteRef: MutableRefObject<HTMLDivElement>
 }
 
-export const useProject = ({ _projectService, deleteRef }: Props): any => {
+export const useTask = ({ _taskService, deleteRef }: Props): any => {
   const [state, setState] = useState({
     toDelete: '',
-    payload: { id: '', name: '', description: '', status: 1, clientId: '' },
-    projects: { data: [], total: 0 },
+    payload: { id: '', name: '', description: '', status: 1, pbiId: '' },
+    tasks: { data: [], total: 0 },
     header: [
       { label: 'name', align: 'left', order: 'name' },
-      { label: 'client', align: 'left' },
+      { label: 'pbi', align: 'left' },
       { label: 'status', align: 'right', order: 'status' },
       { label: 'tools', align: 'right' },
     ],
@@ -32,7 +32,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
       orderBy: '',
       desc: false,
       name: '',
-      clientId: '',
+      pbiId: '',
       status: '',
     },
     reloadData: false,
@@ -57,7 +57,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
         name: '',
         description: '',
         status: 1,
-        clientId: '',
+        pbiId: '',
       },
     }))
   }
@@ -102,7 +102,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
         ...old.filter,
         page: 1,
         name: '',
-        clientId: '',
+        pbiId: '',
         status: '',
         orderBy: '',
         desc: false,
@@ -111,7 +111,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
   }
 
   const handleEdit = (id: string): void => {
-    _projectService
+    _taskService
       .getById(id)
       .then(res => {
         setState(old => ({
@@ -122,7 +122,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
             name: res.name,
             description: res.description,
             status: res.status,
-            clientId: res.client.id,
+            pbiId: res.pbi.id,
           },
         }))
         showModal()
@@ -134,11 +134,11 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
   }
 
   const handleDelete = (): void => {
-    _projectService
+    _taskService
       .delete(state.toDelete)
       .then(res => {
         closeModal(deleteRef)
-        alert(`Project ${res.name} removed with success`)
+        alert(`Task ${res.name} removed with success`)
         setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
       })
       .catch(e => {
@@ -164,21 +164,21 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
     if (state.filter.name) {
       filter.name = state.filter.name
     }
-    if (state.filter.clientId) {
-      filter.clientId = state.filter.clientId
+    if (state.filter.pbiId) {
+      filter.pbiId = state.filter.pbiId
     }
     if (state.filter.status) {
       filter.status = state.filter.status
     }
 
-    _projectService
+    _taskService
       .getAll(filter)
       .then((res: any) => {
-        const projectsData = res.itens?.map(row => {
+        const tasksData = res.itens?.map(row => {
           return {
             values: [
               { value: row.name },
-              { value: row.client.name },
+              { value: row.pbi.name },
               { align: 'right', value: row.status },
               {
                 align: 'right',
@@ -204,7 +204,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
         })
         setState(old => ({
           ...old,
-          projects: { data: projectsData, total: +res.total },
+          tasks: { data: tasksData, total: +res.total },
         }))
       })
       .catch(e => {

@@ -38,6 +38,21 @@ export const Sidebar = (): JSX.Element => {
                     Projects
                   </Link>
                 </li>
+                <li>
+                  <Link to="/timesheet/epics" title="Epics">
+                    Epics
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/timesheet/pbis" title="Pbis">
+                    Pbis
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/timesheet/tasks" title="Tasks">
+                    Tasks
+                  </Link>
+                </li>
               </ul>
             )}
           </span>

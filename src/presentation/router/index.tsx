@@ -9,6 +9,9 @@ import { CompanyFactory } from '@/application/factory/system/company'
 import { UserFactory } from '@/application/factory/webeditor/user'
 import { ClientFactory } from '@/application/factory/timesheet/client'
 import { ProjectFactory } from '@/application/factory/timesheet/project'
+import { EpicFactory } from '@/application/factory/timesheet/epic'
+import { PbiFactory } from '@/application/factory/timesheet/pbi'
+import { TaskFactory } from '@/application/factory/timesheet/task'
 
 const routes = [
   { path: '/', element: <Dashboard />, private: true },
@@ -28,6 +31,21 @@ const routes = [
   {
     path: '/timesheet/projects',
     element: <ProjectFactory />,
+    private: true,
+  },
+  {
+    path: '/timesheet/epics',
+    element: <EpicFactory />,
+    private: true,
+  },
+  {
+    path: '/timesheet/pbis',
+    element: <PbiFactory />,
+    private: true,
+  },
+  {
+    path: '/timesheet/tasks',
+    element: <TaskFactory />,
     private: true,
   },
 ]
