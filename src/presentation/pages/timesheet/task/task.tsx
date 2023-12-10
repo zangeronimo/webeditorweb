@@ -23,6 +23,7 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
     header: [
       { label: 'name', align: 'left', order: 'name' },
       { label: 'pbi', align: 'left' },
+      { label: 'time worked', align: 'right', order: 'totalInSeconds' },
       { label: 'status', align: 'right', order: 'status' },
       { label: 'tools', align: 'right' },
     ],
@@ -164,6 +165,13 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
     showModal(deleteRef)
   }
 
+  const formatSecondsToHours = (seconds: number): string => {
+    const hours = Math.floor(seconds / 3600)
+    const minutes = Math.floor((seconds - hours * 3600) / 60)
+    const sec = seconds - hours * 3600 - minutes * 60
+    return `${hours}:${minutes}:${sec}`
+  }
+
   useEffect(() => {
     const filter = {
       page: state.filter.page,
@@ -193,13 +201,16 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
             values: [
               { value: row.name },
               { value: row.pbi.name },
+              { value: formatSecondsToHours(row.totalInSeconds) },
               { align: 'right', value: row.status },
               {
                 align: 'right',
                 value: (
                   <Group align="right">
                     <Button
-                      disabled={!!working && working !== row.id}
+                      disabled={
+                        (!!working && working !== row.id) || row.status === 0
+                      }
                       label={row.working ? 'Stop' : 'Start'}
                       onClick={() => {
                         handleRegisterWork(row.id)

@@ -23,7 +23,7 @@ export class TaskService implements ITaskService {
                 item.pbi.status,
                 item.pbi.epic,
               ),
-              item.totalInHours,
+              item.totalInSeconds,
               item.working,
             ),
         )
@@ -48,7 +48,7 @@ export class TaskService implements ITaskService {
             res.pbi.status,
             res.pbi.epic,
           ),
-          res.totalInHours,
+          res.totalInSeconds,
           res.working,
         )
       })
