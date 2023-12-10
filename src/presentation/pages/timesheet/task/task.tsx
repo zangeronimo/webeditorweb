@@ -23,7 +23,7 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
     header: [
       { label: 'name', align: 'left', order: 'name' },
       { label: 'pbi', align: 'left' },
-      { label: 'time worked', align: 'right', order: 'totalInSeconds' },
+      { label: 'time worked', align: 'right' },
       { label: 'status', align: 'right', order: 'status' },
       { label: 'tools', align: 'right' },
     ],
