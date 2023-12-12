@@ -7,6 +7,8 @@ import { useEffect, type FormEvent } from 'react'
 import { useLogin } from './login'
 
 import Styles from './styles.module.scss'
+import { Logo } from '@/presentation/components/layout/logo'
+import { ViewBox } from '@/presentation/components/viewBox'
 
 interface Props {
   _makeLogin: IMakeLogin
@@ -27,28 +29,30 @@ export const Login = ({ _makeLogin }: Props): JSX.Element => {
 
   return (
     <View className={Styles.container}>
+      <Logo size="large" />
       <form autoComplete="off" onSubmit={handleLogin}>
         <View className={Styles.form}>
-          <p>WEBEditor - Login</p>
-          <Input
-            label="E-mail:"
-            name="username"
-            value={state.username}
-            onChange={e => {
-              onChange(e)
-            }}
-          />
-          <Input
-            label="Senha:"
-            type="password"
-            name="password"
-            value={state.password}
-            autoComplete="new-password"
-            onChange={e => {
-              onChange(e)
-            }}
-          />
-          <Button type="submit" label="Entrar" />
+          <ViewBox title="">
+            <Input
+              label="E-mail:"
+              name="username"
+              value={state.username}
+              onChange={e => {
+                onChange(e)
+              }}
+            />
+            <Input
+              label="Senha:"
+              type="password"
+              name="password"
+              value={state.password}
+              autoComplete="new-password"
+              onChange={e => {
+                onChange(e)
+              }}
+            />
+            <Button type="submit" label="Entrar" />
+          </ViewBox>
         </View>
       </form>
     </View>
