@@ -13,11 +13,13 @@ export class EpicService implements IEpicService {
           item =>
             new Epic(
               item.id,
+              item.sequence,
               item.name,
               item.descritpion,
               item.status,
               new Project(
                 item.project.id,
+                item.sequence,
                 item.project.name,
                 item.project.description,
                 item.project.status,
@@ -36,11 +38,13 @@ export class EpicService implements IEpicService {
       .then(async (res: any) => {
         return new Epic(
           res.id,
+          res.sequence,
           res.name,
           res.description,
           res.status,
           new Project(
             res.project.id,
+            res.sequence,
             res.project.name,
             res.project.description,
             res.project.status,
@@ -76,11 +80,13 @@ export class EpicService implements IEpicService {
         async (res: Epic) =>
           new Epic(
             res.id,
+            res.sequence,
             res.name,
             res.description,
             res.status,
             new Project(
               res.project.id,
+              res.project.sequence,
               res.project.name,
               res.project.description,
               res.project.status,
@@ -91,24 +97,9 @@ export class EpicService implements IEpicService {
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
 
-  delete = async (id: string): Promise<Epic> => {
-    return await this.http
+  delete = async (id: string): Promise<void> => {
+    await this.http
       .delete(`/timesheet/epic/${id}`)
-      .then(async (res: any) => {
-        return new Epic(
-          res.id,
-          res.name,
-          res.description,
-          res.status,
-          new Project(
-            res.project.id,
-            res.project.name,
-            res.project.description,
-            res.project.status,
-            res.project.client,
-          ),
-        )
-      })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
 }
