@@ -22,9 +22,7 @@ export class ClientService implements IClientService {
       .then(async (res: any) => {
         return new Client(res.id, res.name, res.status)
       })
-      .catch(async e => {
-        return await Promise.reject(new Error(e.response.data))
-      })
+      .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
 
   save = async (payload: any): Promise<Client> => {
