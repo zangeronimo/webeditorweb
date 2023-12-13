@@ -25,7 +25,7 @@ export const Sidebar = (): JSX.Element => {
               openMenu('timesheet')
             }}
           >
-            TimeSheet
+            <h3>TimeSheet</h3>
             {state.opened === 'timesheet' && (
               <ul className={Styles.sub}>
                 <li>
@@ -63,7 +63,7 @@ export const Sidebar = (): JSX.Element => {
               openMenu('webeditor')
             }}
           >
-            WEBEditor
+            <h3>WEBEditor</h3>
             {state.opened === 'webeditor' && (
               <ul className={Styles.sub}>
                 <li>
@@ -81,7 +81,7 @@ export const Sidebar = (): JSX.Element => {
               openMenu('administrator')
             }}
           >
-            Administrator
+            <h3>Administrator</h3>
             {state.opened === 'administrator' && (
               <ul className={Styles.sub}>
                 <li>

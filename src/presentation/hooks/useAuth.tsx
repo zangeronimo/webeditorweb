@@ -78,6 +78,9 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
           case 401:
             // eslint-disable-next-line no-case-declarations
             const token = await refresh()
+            if (!token) {
+              document.location.href = '/auth'
+            }
             error.config.headers.Authorization = `Bearer ${token}`
 
             return await api(error.config)
