@@ -19,7 +19,7 @@ export class EpicService implements IEpicService {
               item.status,
               new Project(
                 item.project.id,
-                item.sequence,
+                item.project.sequence,
                 item.project.name,
                 item.project.description,
                 item.project.status,
@@ -44,7 +44,7 @@ export class EpicService implements IEpicService {
           res.status,
           new Project(
             res.project.id,
-            res.sequence,
+            res.project.sequence,
             res.project.name,
             res.project.description,
             res.project.status,
