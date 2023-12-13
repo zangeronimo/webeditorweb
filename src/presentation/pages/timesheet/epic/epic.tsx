@@ -21,6 +21,7 @@ export const useEpic = ({ _epicService, deleteRef }: Props): any => {
     payload: { id: '', name: '', description: '', status: 1, projectId: '' },
     epics: { data: [], total: 0 },
     header: [
+      { label: 'ID', align: 'left', order: 'sequence' },
       { label: 'name', align: 'left', order: 'name' },
       { label: 'project', align: 'left' },
       { label: 'status', align: 'right', order: 'status' },
@@ -138,7 +139,7 @@ export const useEpic = ({ _epicService, deleteRef }: Props): any => {
       .delete(state.toDelete)
       .then(res => {
         closeModal(deleteRef)
-        alert(`Epic ${res.name} removed with success`)
+        alert('Epic removed with success')
         setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
       })
       .catch(e => {
@@ -177,6 +178,7 @@ export const useEpic = ({ _epicService, deleteRef }: Props): any => {
         const epicsData = res.itens?.map(row => {
           return {
             values: [
+              { value: row.sequence },
               { value: row.name },
               { value: row.project.name },
               { align: 'right', value: row.status },

@@ -13,6 +13,7 @@ export class ProjectService implements IProjectService {
           item =>
             new Project(
               item.id,
+              item.sequence,
               item.name,
               item.descritpion,
               item.status,
@@ -30,6 +31,7 @@ export class ProjectService implements IProjectService {
       .then(async (res: any) => {
         return new Project(
           res.id,
+          res.sequence,
           res.name,
           res.description,
           res.status,
@@ -64,6 +66,7 @@ export class ProjectService implements IProjectService {
         async (res: Project) =>
           new Project(
             res.id,
+            res.sequence,
             res.name,
             res.description,
             res.status,
@@ -73,18 +76,9 @@ export class ProjectService implements IProjectService {
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
 
-  delete = async (id: string): Promise<Project> => {
-    return await this.http
+  delete = async (id: string): Promise<void> => {
+    await this.http
       .delete(`/timesheet/project/${id}`)
-      .then(async (res: any) => {
-        return new Project(
-          res.id,
-          res.name,
-          res.description,
-          res.status,
-          new Client(res.client.id, res.client.name, res.client.status),
-        )
-      })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
 }

@@ -21,6 +21,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
     payload: { id: '', name: '', description: '', status: 1, clientId: '' },
     projects: { data: [], total: 0 },
     header: [
+      { label: 'ID', align: 'left', order: 'sequence' },
       { label: 'name', align: 'left', order: 'name' },
       { label: 'client', align: 'left' },
       { label: 'status', align: 'right', order: 'status' },
@@ -30,7 +31,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
       page: 1,
       pageSize: 10,
       orderBy: '',
-      desc: false,
+      desc: true,
       name: '',
       clientId: '',
       status: '',
@@ -105,7 +106,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
         clientId: '',
         status: '',
         orderBy: '',
-        desc: false,
+        desc: true,
       },
     }))
   }
@@ -136,9 +137,9 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
   const handleDelete = (): void => {
     _projectService
       .delete(state.toDelete)
-      .then(res => {
+      .then(() => {
         closeModal(deleteRef)
-        alert(`Project ${res.name} removed with success`)
+        alert('Project removed with success')
         setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
       })
       .catch(e => {
@@ -177,6 +178,7 @@ export const useProject = ({ _projectService, deleteRef }: Props): any => {
         const projectsData = res.itens?.map(row => {
           return {
             values: [
+              { value: row.sequence },
               { value: row.name },
               { value: row.client.name },
               { align: 'right', value: row.status },

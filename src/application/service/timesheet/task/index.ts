@@ -19,6 +19,7 @@ export class TaskService implements ITaskService {
               item.status,
               new Pbi(
                 item.pbi.id,
+                item.pbi.sequence,
                 item.pbi.name,
                 item.pbi.description,
                 item.pbi.status,
@@ -44,6 +45,7 @@ export class TaskService implements ITaskService {
           res.status,
           new Pbi(
             res.pbi.id,
+            res.pbi.sequence,
             res.pbi.name,
             res.pbi.description,
             res.pbi.status,
@@ -94,6 +96,7 @@ export class TaskService implements ITaskService {
             res.status,
             new Pbi(
               res.pbi.id,
+              res.pbi.sequence,
               res.pbi.name,
               res.pbi.description,
               res.pbi.status,
@@ -117,6 +120,7 @@ export class TaskService implements ITaskService {
           res.status,
           new Pbi(
             res.pbi.id,
+            res.pbi.sequence,
             res.pbi.name,
             res.pbi.description,
             res.pbi.status,

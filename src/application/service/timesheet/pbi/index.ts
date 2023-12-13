@@ -13,11 +13,13 @@ export class PbiService implements IPbiService {
           item =>
             new Pbi(
               item.id,
+              item.sequence,
               item.name,
               item.descritpion,
               item.status,
               new Epic(
                 item.epic.id,
+                item.epic.sequence,
                 item.epic.name,
                 item.epic.description,
                 item.epic.status,
@@ -36,11 +38,13 @@ export class PbiService implements IPbiService {
       .then(async (res: any) => {
         return new Pbi(
           res.id,
+          res.sequence,
           res.name,
           res.description,
           res.status,
           new Epic(
             res.epic.id,
+            res.epic.sequence,
             res.epic.name,
             res.epic.description,
             res.epic.status,
@@ -76,11 +80,13 @@ export class PbiService implements IPbiService {
         async (res: Pbi) =>
           new Pbi(
             res.id,
+            res.sequence,
             res.name,
             res.description,
             res.status,
             new Epic(
               res.epic.id,
+              res.epic.sequence,
               res.epic.name,
               res.epic.description,
               res.epic.status,
@@ -91,24 +97,9 @@ export class PbiService implements IPbiService {
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
 
-  delete = async (id: string): Promise<Pbi> => {
-    return await this.http
-      .delete(`/timesheet/pbi/${id}`)
-      .then(async (res: any) => {
-        return new Pbi(
-          res.id,
-          res.name,
-          res.description,
-          res.status,
-          new Epic(
-            res.epic.id,
-            res.epic.name,
-            res.epic.description,
-            res.epic.status,
-            res.epic.project,
-          ),
-        )
-      })
-      .catch(async e => await Promise.reject(new Error(e.response.data)))
+  delete = async (id: string): Promise<void> => {
+    await this.http.delete(`/timesheet/pbi/${id}`).catch(async e => {
+      await Promise.reject(new Error(e.response.data))
+    })
   }
 }
