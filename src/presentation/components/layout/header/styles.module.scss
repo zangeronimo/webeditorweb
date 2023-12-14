@@ -9,3 +9,21 @@
     text-decoration: none;
   }
 }
+
+.left {
+  display: flex;
+  align-items: center;
+}
+
+.breadcrumb {
+  ul {
+    margin-left: 5.1rem;
+    display: flex;
+    align-items: center;
+    gap: 1rem;
+
+    li {
+      list-style: none;
+    }
+  }
+}

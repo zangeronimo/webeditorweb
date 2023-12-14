@@ -1,72 +1,44 @@
 import { LoginFactory } from '@/application/factory/system/login'
-import { Route, Routes } from 'react-router-dom'
-import { Dashboard } from '../pages/system/dashboard'
-import { AuthenticatedUrl } from './authenticatedUrl'
+import { Route, Routes, type RouteObject } from 'react-router-dom'
 import { PageNotFound } from '../pages/system/_404'
-import { RoleFactory } from '@/application/factory/system/role'
-import { ModuleFactory } from '@/application/factory/system/module'
-import { CompanyFactory } from '@/application/factory/system/company'
-import { UserFactory } from '@/application/factory/webeditor/user'
-import { ClientFactory } from '@/application/factory/timesheet/client'
-import { ProjectFactory } from '@/application/factory/timesheet/project'
-import { EpicFactory } from '@/application/factory/timesheet/epic'
-import { PbiFactory } from '@/application/factory/timesheet/pbi'
-import { TaskFactory } from '@/application/factory/timesheet/task'
-
-const routes = [
-  { path: '/', element: <Dashboard />, private: true },
-  { path: '/webeditor/user', element: <UserFactory />, private: true },
-  { path: '/administrator/role', element: <RoleFactory />, private: true },
-  { path: '/administrator/module', element: <ModuleFactory />, private: true },
-  {
-    path: '/administrator/company',
-    element: <CompanyFactory />,
-    private: true,
-  },
-  {
-    path: '/timesheet/clients',
-    element: <ClientFactory />,
-    private: true,
-  },
-  {
-    path: '/timesheet/projects',
-    element: <ProjectFactory />,
-    private: true,
-  },
-  {
-    path: '/timesheet/epics',
-    element: <EpicFactory />,
-    private: true,
-  },
-  {
-    path: '/timesheet/pbis',
-    element: <PbiFactory />,
-    private: true,
-  },
-  {
-    path: '/timesheet/tasks',
-    element: <TaskFactory />,
-    private: true,
-  },
-]
+import { AuthenticatedUrl } from './authenticatedUrl'
+import { type RoutePathDefinition } from './matchRouterDefinitions'
+import { routesArray } from './routesArray'
+import { validateRoutes } from './validateRoutes'
 
 export const Router = (): JSX.Element => {
   return (
     <Routes>
       <Route path="/auth" element={<LoginFactory />} />
-      {routes?.map(route => (
-        <Route
-          key={route.path}
-          path={route.path}
-          element={
-            route.private ? (
-              <AuthenticatedUrl>{route.element}</AuthenticatedUrl>
-            ) : (
-              route.element
-            )
-          }
-        />
-      ))}
+      {routesArray?.map(route => {
+        if (!route.children) {
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={validateRoutes({ route })}
+            />
+          )
+        } else {
+          return (
+            <Route
+              key={route.path}
+              path={route.path}
+              element={validateRoutes({ route })}
+            >
+              {route.children.map(
+                (child: RouteObject & RoutePathDefinition) => (
+                  <Route
+                    key={child.path}
+                    path={child.path}
+                    element={validateRoutes({ route: child })}
+                  />
+                ),
+              )}
+            </Route>
+          )
+        }
+      })}
       <Route
         path="*"
         element={
