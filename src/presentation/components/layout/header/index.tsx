@@ -1,11 +1,11 @@
 import { useAuth } from '@/presentation/hooks/useAuth'
-import { Button } from '../../form/button'
-
-import Styles from './styles.module.scss'
+import { routesArray } from '@/presentation/router/routesArray'
 import { Link } from 'react-router-dom'
+import { Button } from '../../form/button'
 import { Logo } from '../logo'
 import { Breadcrumbs } from './breadcrumb'
-import { routesArray } from '@/presentation/router/routesArray'
+
+import Styles from './styles.module.scss'
 
 export const Header = (): JSX.Element => {
   const { logout } = useAuth()
