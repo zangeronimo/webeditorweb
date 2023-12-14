@@ -1,18 +1,23 @@
 import { useAuth } from '@/presentation/hooks/useAuth'
+import { routesArray } from '@/presentation/router/routesArray'
+import { Link } from 'react-router-dom'
 import { Button } from '../../form/button'
+import { Logo } from '../logo'
+import { Breadcrumbs } from './breadcrumb'
 
 import Styles from './styles.module.scss'
-import { Link } from 'react-router-dom'
-import { Logo } from '../logo'
 
 export const Header = (): JSX.Element => {
   const { logout } = useAuth()
   return (
     <div className={Styles.container}>
-      <div>
+      <div className={Styles.left}>
         <Link to="/" title="Go to home">
           <Logo />
         </Link>
+        <div className={Styles.breadcrumb}>
+          <Breadcrumbs routes={routesArray} />
+        </div>
       </div>
       <Button label="Sair" onClick={logout} />
     </div>
