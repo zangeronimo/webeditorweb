@@ -7,6 +7,7 @@ export class Epic {
     readonly name: string,
     readonly description: string,
     readonly status: number,
+    readonly projectId: string,
     readonly project: Project,
   ) {}
 }

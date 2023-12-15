@@ -34,7 +34,11 @@ export const Modules = ({ _moduleService }: Props): JSX.Element => {
 
   return (
     <View>
-      <Modal title="Add new Module" onClose={handleClearPayload}>
+      <Modal
+        title="Add new Module"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}

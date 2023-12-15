@@ -35,7 +35,11 @@ export const Clients = ({ _clientService }: Props): JSX.Element => {
 
   return (
     <View>
-      <Modal title="Add new Client" onClose={handleClearPayload}>
+      <Modal
+        title="Add new Client"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}

@@ -49,7 +49,11 @@ export const Users = ({ _userService, _moduleService }: Props): JSX.Element => {
 
   return (
     <View>
-      <Modal title="Add new User" onClose={handleClearPayload}>
+      <Modal
+        title="Add new User"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           modules={modules}
           handleClearPayload={handleClearPayload}

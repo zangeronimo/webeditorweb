@@ -56,7 +56,11 @@ export const PbiStatus = ({
 
   return (
     <View>
-      <Modal title="Add new PbiStatus" onClose={handleClearPayload}>
+      <Modal
+        title="Add new PbiStatus"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}

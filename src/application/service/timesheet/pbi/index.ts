@@ -24,6 +24,7 @@ export class PbiService implements IPbiService {
                 item.epic.name,
                 item.epic.description,
                 item.epic.status,
+                item.epic.projectId,
                 item.epic.project,
               ),
             ),
@@ -50,6 +51,7 @@ export class PbiService implements IPbiService {
             res.epic.name,
             res.epic.description,
             res.epic.status,
+            res.epic.projectId,
             res.epic.project,
           ),
         )
@@ -95,6 +97,7 @@ export class PbiService implements IPbiService {
               res.epic.name,
               res.epic.description,
               res.epic.status,
+              res.epic.projectId,
               res.epic.project,
             ),
           ),

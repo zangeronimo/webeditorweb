@@ -53,7 +53,11 @@ export const Tasks = ({ _taskService, _pbiService }: Props): JSX.Element => {
 
   return (
     <View>
-      <Modal title="Add new Task" onClose={handleClearPayload}>
+      <Modal
+        title="Add new Task"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}

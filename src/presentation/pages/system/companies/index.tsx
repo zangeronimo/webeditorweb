@@ -53,7 +53,11 @@ export const Companies = ({
 
   return (
     <View>
-      <Modal title="Add new Company" onClose={handleClearPayload}>
+      <Modal
+        title="Add new Company"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           modules={modules}
           handleClearPayload={handleClearPayload}
