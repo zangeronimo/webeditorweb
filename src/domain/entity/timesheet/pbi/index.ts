@@ -7,6 +7,7 @@ export class Pbi {
     readonly name: string,
     readonly description: string,
     readonly status: number,
+    readonly pbiStatusId: string,
     readonly epic: Epic,
   ) {}
 }

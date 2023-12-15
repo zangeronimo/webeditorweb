@@ -9,6 +9,7 @@ import { TaskFactory } from '@/application/factory/timesheet/task'
 import { UserFactory } from '@/application/factory/webeditor/user'
 import { Dashboard } from '../pages/system/dashboard'
 import { type RoutePathDefinition } from './matchRouterDefinitions'
+import { PbiStatusFactory } from '@/application/factory/timesheet/pbiStatus'
 
 export const routesArray: RoutePathDefinition[] = [
   { title: 'Dashboard', path: '/', element: <Dashboard />, private: true },
@@ -58,6 +59,12 @@ export const routesArray: RoutePathDefinition[] = [
     title: 'PBIs',
     path: '/timesheet/pbis',
     element: <PbiFactory />,
+    private: true,
+  },
+  {
+    title: 'PBI Status',
+    path: '/timesheet/pbistatus',
+    element: <PbiStatusFactory />,
     private: true,
   },
   {

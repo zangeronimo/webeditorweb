@@ -1,5 +1,4 @@
-import { type IPbiService } from '@/application/interface/timesheet/pbi'
-import { Editor } from '@/presentation/components/editor'
+import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Button } from '@/presentation/components/form/button'
 import { Input } from '@/presentation/components/form/input'
 import { Select, type SelectData } from '@/presentation/components/form/select'
@@ -9,35 +8,32 @@ import { useState, type FormEvent } from 'react'
 type Data = {
   id?: string
   name: string
-  description: string
+  order: string
   status: number
-  epicId: string
-  pbiStatusId: string
+  clientId: string
 }
 
 type Props = {
-  epics: SelectData[]
-  pbiStatus: SelectData[]
+  clients: SelectData[]
   handleClearPayload: () => void
   handleChangePayload: (e: FormEvent) => void
   data: Data
-  _pbiService: IPbiService
+  _pbiStatusService: IPbiStatusService
 }
 
 export const Form = ({
-  epics,
-  pbiStatus,
+  clients,
   handleClearPayload,
   handleChangePayload,
   data,
-  _pbiService,
+  _pbiStatusService,
 }: Props): JSX.Element => {
   const [, setState] = useState({ reRender: false })
   const { closeModal } = useModal()
 
   const handleNewRegister = (e: FormEvent): void => {
     e.preventDefault()
-    _pbiService
+    _pbiStatusService
       .save(data)
       .then(res => {
         handleClearPayload()
@@ -58,21 +54,19 @@ export const Form = ({
         value={data.name}
         onChange={handleChangePayload}
       />
-      <Editor
-        data={data.description}
-        onChange={data => {
-          handleChangePayload({
-            target: { name: 'description', value: data },
-          } as any)
-        }}
+      <Input
+        name="order"
+        label="Order"
+        value={data.order}
+        onChange={handleChangePayload}
       />
       <Select
         disabled={!!data.id}
-        name="epicId"
-        label="Epics"
-        value={data.epicId}
+        name="clientId"
+        label="Clients"
+        value={data.clientId}
         onChange={handleChangePayload}
-        data={[{ label: 'Select one', value: '' }, ...epics]}
+        data={[{ label: 'Select one', value: '' }, ...clients]}
       />
       <Select
         label="Status"
@@ -83,13 +77,6 @@ export const Form = ({
           { label: 'Active', value: 1 },
           { label: 'Inactive', value: 0 },
         ]}
-      />
-      <Select
-        name="pbiStatusId"
-        label="Development Status"
-        value={data.pbiStatusId}
-        onChange={handleChangePayload}
-        data={[{ label: 'Select one', value: '' }, ...pbiStatus]}
       />
       <Button type="submit" label="Save" />
     </form>

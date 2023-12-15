@@ -1,5 +1,5 @@
-import { type IEpicService } from '@/application/interface/timesheet/epic'
-import { type IPbiService } from '@/application/interface/timesheet/pbi'
+import { type IClientService } from '@/application/interface/timesheet/client'
+import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Confirm } from '@/presentation/components/confirm'
 import { DataTable } from '@/presentation/components/datatable'
 import { Pagination } from '@/presentation/components/datatable/pagination'
@@ -12,23 +12,19 @@ import { ViewBox } from '@/presentation/components/viewBox'
 import { useModal } from '@/presentation/hooks/useModal'
 import { useEffect, useRef, useState } from 'react'
 import { Form } from './form'
-import { usePbi } from './pbi'
 import { Select, type SelectData } from '@/presentation/components/form/select'
-import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
+import { usePbiStatus } from './pbiStatus'
 
 type Props = {
-  _pbiService: IPbiService
-  _epicService: IEpicService
   _pbiStatusService: IPbiStatusService
+  _clientService: IClientService
 }
 
-export const Pbis = ({
-  _pbiService,
-  _epicService,
+export const PbiStatus = ({
   _pbiStatusService,
+  _clientService,
 }: Props): JSX.Element => {
-  const [epics, setEpics] = useState<SelectData[]>([])
-  const [pbiStatus, setPbiStatus] = useState<SelectData[]>([])
+  const [clients, setClients] = useState<SelectData[]>([])
   const { showModal, closeModal } = useModal()
   const deleteRef = useRef()
   const {
@@ -41,32 +37,17 @@ export const Pbis = ({
     handleChangePayload,
     handleClearPayload,
     handleDelete,
-  } = usePbi({ _pbiService, deleteRef })
+  } = usePbiStatus({ _pbiStatusService, deleteRef })
 
   useEffect(() => {
-    _epicService
+    _clientService
       .getAll({ page: 1, pageSize: 999 })
       .then(res => {
         const items = res.itens?.map(item => ({
           label: item.name,
           value: item.id,
         }))
-        setEpics(items)
-      })
-      .catch(e => {
-        console.error(e.message)
-      })
-  }, [])
-
-  useEffect(() => {
-    _pbiStatusService
-      .getAll({ page: 1, pageSize: 999, orderBy: 'sort_order' })
-      .then(res => {
-        const items = res.itens?.map(item => ({
-          label: item.name,
-          value: item.id,
-        }))
-        setPbiStatus(items)
+        setClients(items)
       })
       .catch(e => {
         console.error(e.message)
@@ -75,20 +56,18 @@ export const Pbis = ({
 
   return (
     <View>
-      <Modal title="Add new Pbi" onClose={handleClearPayload}>
+      <Modal title="Add new PbiStatus" onClose={handleClearPayload}>
         <Form
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}
-          _pbiService={_pbiService}
-          epics={epics}
-          pbiStatus={pbiStatus}
+          _pbiStatusService={_pbiStatusService}
+          clients={clients}
           data={{
             id: state.payload.id,
             name: state.payload.name,
-            description: state.payload.description,
+            order: state.payload.order,
             status: state.payload.status,
-            epicId: state.payload.epicId,
-            pbiStatusId: state.payload.pbiStatusId,
+            clientId: state.payload.clientId,
           }}
         />
       </Modal>
@@ -100,7 +79,7 @@ export const Pbis = ({
           closeModal(deleteRef)
         }}
       >
-        <p>Are you sure to delete the epic?</p>
+        <p>Are you sure to delete the client?</p>
       </Confirm>
       <ViewBox title="Filter">
         <form onSubmit={handleSubmit}>
@@ -112,11 +91,11 @@ export const Pbis = ({
               onChange={handleChangeFilter}
             />
             <Select
-              name="epicId"
-              label="Epics"
-              value={state.filter.epicId}
+              name="clientId"
+              label="Clients"
+              value={state.filter.clientId}
               onChange={handleChangeFilter}
-              data={[{ label: 'All', value: '' }, ...epics]}
+              data={[{ label: 'All', value: '' }, ...clients]}
             />
             <Select
               name="status"
@@ -142,20 +121,20 @@ export const Pbis = ({
       </ViewBox>
       <ViewBox title="Result">
         <Button
-          label="Add new pbi"
+          label="Add new pbiStatus"
           onClick={() => {
             showModal()
           }}
         />
         <DataTable
           header={state.header}
-          data={state.pbis.data}
+          data={state.pbiStatus.data}
           onOrder={(key: string) => {
             handleChangeOrder(key)
           }}
         />
         <Pagination
-          total={state.pbis.total}
+          total={state.pbiStatus.total}
           perPage={state.filter.pageSize}
           currentPage={state.filter.page}
           onPageChange={(page: number) => handleChangePage(page)}

@@ -10,6 +10,7 @@ export class TaskService implements ITaskService {
     return await this.http
       .get('/timesheet/task', { params: filter })
       .then(async (res: any) => {
+        console.log(res)
         const tasks: Task[] = res.itens?.map(
           item =>
             new Task(
@@ -23,6 +24,7 @@ export class TaskService implements ITaskService {
                 item.pbi.name,
                 item.pbi.description,
                 item.pbi.status,
+                item.pbi.pbiStatusId,
                 item.pbi.epic,
               ),
               new Seconds(item.totalInSeconds),
@@ -49,6 +51,7 @@ export class TaskService implements ITaskService {
             res.pbi.name,
             res.pbi.description,
             res.pbi.status,
+            res.pbi.pbiStatusId,
             res.pbi.epic,
           ),
           new Seconds(res.totalInSeconds),
@@ -100,6 +103,7 @@ export class TaskService implements ITaskService {
               res.pbi.name,
               res.pbi.description,
               res.pbi.status,
+              res.pbi.pbiStatusId,
               res.pbi.epic,
             ),
             new Seconds(0),
@@ -124,6 +128,7 @@ export class TaskService implements ITaskService {
             res.pbi.name,
             res.pbi.description,
             res.pbi.status,
+            res.pbi.pbiStatusId,
             res.pbi.epic,
           ),
           new Seconds(0),

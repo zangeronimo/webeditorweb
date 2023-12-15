@@ -1,4 +1,4 @@
-import { type IPbiService } from '@/application/interface/timesheet/pbi'
+import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Button } from '@/presentation/components/form/button'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
@@ -11,26 +11,18 @@ import {
 } from 'react'
 
 type Props = {
-  _pbiService: IPbiService
+  _pbiStatusService: IPbiStatusService
   deleteRef: MutableRefObject<HTMLDivElement>
 }
 
-export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
+export const usePbiStatus = ({ _pbiStatusService, deleteRef }: Props): any => {
   const [state, setState] = useState({
     toDelete: '',
-    payload: {
-      id: '',
-      name: '',
-      description: '',
-      status: 1,
-      epicId: '',
-      pbiStatusId: '',
-    },
-    pbis: { data: [], total: 0 },
+    payload: { id: '', name: '', order: 0, status: 1, clientId: '' },
+    pbiStatus: { data: [], total: 0 },
     header: [
-      { label: 'ID', align: 'left', order: 'sequence' },
       { label: 'name', align: 'left', order: 'name' },
-      { label: 'epic', align: 'left' },
+      { label: 'order', align: 'left', order: 'sort_order' },
       { label: 'status', align: 'right', order: 'status' },
       { label: 'tools', align: 'right' },
     ],
@@ -40,7 +32,7 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
       orderBy: '',
       desc: false,
       name: '',
-      epicId: '',
+      clientId: '',
       status: '',
     },
     reloadData: false,
@@ -63,10 +55,9 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
         ...old.payload,
         id: '',
         name: '',
-        description: '',
+        order: 0,
         status: 1,
-        epicId: '',
-        pbiStatusId: '',
+        clientId: '',
       },
     }))
   }
@@ -111,7 +102,7 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
         ...old.filter,
         page: 1,
         name: '',
-        epicId: '',
+        clientId: '',
         status: '',
         orderBy: '',
         desc: false,
@@ -120,7 +111,7 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
   }
 
   const handleEdit = (id: string): void => {
-    _pbiService
+    _pbiStatusService
       .getById(id)
       .then(res => {
         setState(old => ({
@@ -129,10 +120,9 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
             ...old.payload,
             id: res.id,
             name: res.name,
-            description: res.description,
+            order: res.order,
             status: res.status,
-            epicId: res.epic.id,
-            pbiStatusId: res.pbiStatusId,
+            clientId: res.clientId,
           },
         }))
         showModal()
@@ -144,11 +134,11 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
   }
 
   const handleDelete = (): void => {
-    _pbiService
+    _pbiStatusService
       .delete(state.toDelete)
       .then(res => {
         closeModal(deleteRef)
-        alert('Pbi removed with success')
+        alert('PbiStatus removed with success')
         setState(old => ({ ...old, toDelete: '', reloadData: !old.reloadData }))
       })
       .catch(e => {
@@ -174,22 +164,21 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
     if (state.filter.name) {
       filter.name = state.filter.name
     }
-    if (state.filter.epicId) {
-      filter.epicId = state.filter.epicId
+    if (state.filter.clientId) {
+      filter.clientId = state.filter.clientId
     }
     if (state.filter.status) {
       filter.status = state.filter.status
     }
 
-    _pbiService
+    _pbiStatusService
       .getAll(filter)
       .then((res: any) => {
-        const pbisData = res.itens?.map(row => {
+        const pbiStatusData = res.itens?.map(row => {
           return {
             values: [
-              { value: row.sequence },
               { value: row.name },
-              { value: row.epic.name },
+              { value: row.order },
               { align: 'right', value: row.status },
               {
                 align: 'right',
@@ -215,7 +204,7 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
         })
         setState(old => ({
           ...old,
-          pbis: { data: pbisData, total: +res.total },
+          pbiStatus: { data: pbiStatusData, total: +res.total },
         }))
       })
       .catch(e => {
