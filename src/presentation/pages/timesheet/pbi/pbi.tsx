@@ -18,7 +18,14 @@ type Props = {
 export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
   const [state, setState] = useState({
     toDelete: '',
-    payload: { id: '', name: '', description: '', status: 1, epicId: '' },
+    payload: {
+      id: '',
+      name: '',
+      description: '',
+      status: 1,
+      epicId: '',
+      pbiStatusId: '',
+    },
     pbis: { data: [], total: 0 },
     header: [
       { label: 'ID', align: 'left', order: 'sequence' },
@@ -59,6 +66,7 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
         description: '',
         status: 1,
         epicId: '',
+        pbiStatusId: '',
       },
     }))
   }
@@ -124,6 +132,7 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
             description: res.description,
             status: res.status,
             epicId: res.epic.id,
+            pbiStatusId: res.pbiStatusId,
           },
         }))
         showModal()

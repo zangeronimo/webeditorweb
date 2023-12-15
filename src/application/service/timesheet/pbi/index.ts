@@ -17,6 +17,7 @@ export class PbiService implements IPbiService {
               item.name,
               item.descritpion,
               item.status,
+              item.pbiStatusId,
               new Epic(
                 item.epic.id,
                 item.epic.sequence,
@@ -42,6 +43,7 @@ export class PbiService implements IPbiService {
           res.name,
           res.description,
           res.status,
+          res.pbiStatusId,
           new Epic(
             res.epic.id,
             res.epic.sequence,
@@ -64,6 +66,7 @@ export class PbiService implements IPbiService {
           name: payload.name,
           description: payload.description,
           status: payload.status,
+          pbiStatusId: payload.pbiStatusId,
           epicId: payload.epicId,
         })
     } else {
@@ -72,6 +75,7 @@ export class PbiService implements IPbiService {
           name: payload.name,
           description: payload.description,
           status: payload.status,
+          pbiStatusId: payload.pbiStatusId,
           epicId: payload.epicId,
         })
     }
@@ -84,6 +88,7 @@ export class PbiService implements IPbiService {
             res.name,
             res.description,
             res.status,
+            res.pbiStatusId,
             new Epic(
               res.epic.id,
               res.epic.sequence,

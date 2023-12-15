@@ -12,10 +12,12 @@ type Data = {
   description: string
   status: number
   epicId: string
+  pbiStatusId: string
 }
 
 type Props = {
   epics: SelectData[]
+  pbiStatus: SelectData[]
   handleClearPayload: () => void
   handleChangePayload: (e: FormEvent) => void
   data: Data
@@ -24,6 +26,7 @@ type Props = {
 
 export const Form = ({
   epics,
+  pbiStatus,
   handleClearPayload,
   handleChangePayload,
   data,
@@ -80,6 +83,13 @@ export const Form = ({
           { label: 'Active', value: 1 },
           { label: 'Inactive', value: 0 },
         ]}
+      />
+      <Select
+        name="pbiStatusId"
+        label="Development Status"
+        value={data.pbiStatusId}
+        onChange={handleChangePayload}
+        data={[{ label: 'Select one', value: '' }, ...pbiStatus]}
       />
       <Button type="submit" label="Save" />
     </form>

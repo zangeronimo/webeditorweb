@@ -14,14 +14,21 @@ import { useEffect, useRef, useState } from 'react'
 import { Form } from './form'
 import { usePbi } from './pbi'
 import { Select, type SelectData } from '@/presentation/components/form/select'
+import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 
 type Props = {
   _pbiService: IPbiService
   _epicService: IEpicService
+  _pbiStatusService: IPbiStatusService
 }
 
-export const Pbis = ({ _pbiService, _epicService }: Props): JSX.Element => {
+export const Pbis = ({
+  _pbiService,
+  _epicService,
+  _pbiStatusService,
+}: Props): JSX.Element => {
   const [epics, setEpics] = useState<SelectData[]>([])
+  const [pbiStatus, setPbiStatus] = useState<SelectData[]>([])
   const { showModal, closeModal } = useModal()
   const deleteRef = useRef()
   const {
@@ -51,6 +58,21 @@ export const Pbis = ({ _pbiService, _epicService }: Props): JSX.Element => {
       })
   }, [])
 
+  useEffect(() => {
+    _pbiStatusService
+      .getAll({ page: 1, pageSize: 999, orderBy: 'sort_order' })
+      .then(res => {
+        const items = res.itens?.map(item => ({
+          label: item.name,
+          value: item.id,
+        }))
+        setPbiStatus(items)
+      })
+      .catch(e => {
+        console.error(e.message)
+      })
+  }, [])
+
   return (
     <View>
       <Modal title="Add new Pbi" onClose={handleClearPayload}>
@@ -59,12 +81,14 @@ export const Pbis = ({ _pbiService, _epicService }: Props): JSX.Element => {
           handleChangePayload={handleChangePayload}
           _pbiService={_pbiService}
           epics={epics}
+          pbiStatus={pbiStatus}
           data={{
             id: state.payload.id,
             name: state.payload.name,
             description: state.payload.description,
             status: state.payload.status,
             epicId: state.payload.epicId,
+            pbiStatusId: state.payload.pbiStatusId,
           }}
         />
       </Modal>
