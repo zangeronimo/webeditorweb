@@ -1,15 +1,16 @@
 import { CompanyFactory } from '@/application/factory/system/company'
 import { ModuleFactory } from '@/application/factory/system/module'
 import { RoleFactory } from '@/application/factory/system/role'
+import { BoardFactory } from '@/application/factory/timesheet/board'
 import { ClientFactory } from '@/application/factory/timesheet/client'
 import { EpicFactory } from '@/application/factory/timesheet/epic'
 import { PbiFactory } from '@/application/factory/timesheet/pbi'
+import { PbiStatusFactory } from '@/application/factory/timesheet/pbiStatus'
 import { ProjectFactory } from '@/application/factory/timesheet/project'
 import { TaskFactory } from '@/application/factory/timesheet/task'
 import { UserFactory } from '@/application/factory/webeditor/user'
 import { Dashboard } from '../pages/system/dashboard'
 import { type RoutePathDefinition } from './matchRouterDefinitions'
-import { PbiStatusFactory } from '@/application/factory/timesheet/pbiStatus'
 
 export const routesArray: RoutePathDefinition[] = [
   { title: 'Dashboard', path: '/', element: <Dashboard />, private: true },
@@ -35,6 +36,12 @@ export const routesArray: RoutePathDefinition[] = [
     title: 'Company',
     path: '/administrator/company',
     element: <CompanyFactory />,
+    private: true,
+  },
+  {
+    title: 'Board',
+    path: '/timesheet/board',
+    element: <BoardFactory />,
     private: true,
   },
   {

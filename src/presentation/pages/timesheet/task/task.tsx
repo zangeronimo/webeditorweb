@@ -194,7 +194,7 @@ export const useTask = ({ _taskService, deleteRef }: Props): any => {
           return {
             values: [
               { value: row.name },
-              { value: row.pbi.name },
+              { value: `${row.pbi.sequence} - ${row.pbi.name}` },
               { value: row.totalInSeconds.formatToHours() },
               { align: 'right', value: row.status },
               {

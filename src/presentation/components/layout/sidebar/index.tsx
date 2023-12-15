@@ -29,6 +29,11 @@ export const Sidebar = (): JSX.Element => {
             {state.opened === 'timesheet' && (
               <ul className={Styles.sub}>
                 <li>
+                  <Link to="/timesheet/board" title="Board">
+                    Board
+                  </Link>
+                </li>
+                <li>
                   <Link to="/timesheet/clients" title="Clients">
                     Clients
                   </Link>
