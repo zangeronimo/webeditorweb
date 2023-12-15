@@ -56,7 +56,11 @@ export const Epics = ({
 
   return (
     <View>
-      <Modal title="Add new Epic" onClose={handleClearPayload}>
+      <Modal
+        title="Add new Epic"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}

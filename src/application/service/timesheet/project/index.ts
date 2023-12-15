@@ -17,6 +17,7 @@ export class ProjectService implements IProjectService {
               item.name,
               item.descritpion,
               item.status,
+              item.clientId,
               new Client(item.client.id, item.client.name, item.client.status),
             ),
         )
@@ -35,6 +36,7 @@ export class ProjectService implements IProjectService {
           res.name,
           res.description,
           res.status,
+          res.clientId,
           new Client(res.client.id, res.client.name, res.client.status),
         )
       })
@@ -70,6 +72,7 @@ export class ProjectService implements IProjectService {
             res.name,
             res.description,
             res.status,
+            res.clientId,
             new Client(res.client.id, res.client.name, res.client.status),
           ),
       )

@@ -10,7 +10,6 @@ export class TaskService implements ITaskService {
     return await this.http
       .get('/timesheet/task', { params: filter })
       .then(async (res: any) => {
-        console.log(res)
         const tasks: Task[] = res.itens?.map(
           item =>
             new Task(

@@ -1,5 +1,6 @@
 import { type IMakeLogin } from '@/application/interface/system/makeLogin'
 import { useAuth } from '@/presentation/hooks/useAuth'
+import { useToast } from '@/presentation/hooks/useToast'
 import { type ChangeEvent, useState } from 'react'
 
 interface Output {
@@ -14,6 +15,7 @@ interface Output {
 export const useLogin = (): Output => {
   const [state, setState] = useState({ username: '', password: '' })
   const { login } = useAuth()
+  const { toast } = useToast()
 
   const onChange = (e: ChangeEvent<HTMLInputElement>): void => {
     if (e?.target)
@@ -27,7 +29,7 @@ export const useLogin = (): Output => {
         login(res)
       })
       .catch((e: Error) => {
-        console.error(e.message)
+        toast.danger('Invalid Login', e.message)
       })
   }
   return { makeLogin, onChange, state }

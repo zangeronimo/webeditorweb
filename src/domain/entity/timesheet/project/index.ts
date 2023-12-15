@@ -7,6 +7,7 @@ export class Project {
     readonly name: string,
     readonly description: string,
     readonly status: number,
+    readonly clientId: string,
     readonly client: Client,
   ) {}
 }

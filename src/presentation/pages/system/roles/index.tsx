@@ -53,7 +53,11 @@ export const Roles = ({ _roleService, _moduleService }: Props): JSX.Element => {
 
   return (
     <View>
-      <Modal title="Add new Role" onClose={handleClearPayload}>
+      <Modal
+        title="Add new Role"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           modules={modules}
           handleClearPayload={handleClearPayload}

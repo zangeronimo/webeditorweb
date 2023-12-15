@@ -1,10 +1,11 @@
 import { type IPbiService } from '@/application/interface/timesheet/pbi'
+import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Editor } from '@/presentation/components/editor'
 import { Button } from '@/presentation/components/form/button'
 import { Input } from '@/presentation/components/form/input'
 import { Select, type SelectData } from '@/presentation/components/form/select'
 import { useModal } from '@/presentation/hooks/useModal'
-import { useState, type FormEvent } from 'react'
+import { useState, type FormEvent, useEffect } from 'react'
 
 type Data = {
   id?: string
@@ -17,22 +18,28 @@ type Data = {
 
 type Props = {
   epics: SelectData[]
-  pbiStatus: SelectData[]
+  clientId: string
   handleClearPayload: () => void
   handleChangePayload: (e: FormEvent) => void
   data: Data
   _pbiService: IPbiService
+  _pbiStatusService: IPbiStatusService
 }
 
 export const Form = ({
   epics,
-  pbiStatus,
+  clientId,
   handleClearPayload,
   handleChangePayload,
   data,
   _pbiService,
+  _pbiStatusService,
 }: Props): JSX.Element => {
-  const [, setState] = useState({ reRender: false })
+  const [state, setState] = useState({
+    reRender: false,
+    pbiStatus: [],
+    epicsSelectData: [],
+  })
   const { closeModal } = useModal()
 
   const handleNewRegister = (e: FormEvent): void => {
@@ -41,13 +48,28 @@ export const Form = ({
       .save(data)
       .then(res => {
         handleClearPayload()
-        setState(old => ({ reRender: !old.reRender }))
+        setState(old => ({ ...old, reRender: !old.reRender }))
         closeModal()
       })
       .catch(e => {
         console.error(e.message)
       })
   }
+
+  useEffect((): void => {
+    _pbiStatusService
+      .getAll({ page: 1, pageSize: 999, orderBy: 'sort_order', clientId })
+      .then(res => {
+        const items = res.itens?.map(item => ({
+          label: item.name,
+          value: item.id,
+        }))
+        setState(old => ({ ...old, pbiStatus: items }))
+      })
+      .catch(e => {
+        console.error(e.message)
+      })
+  }, [clientId])
 
   return (
     <form onSubmit={handleNewRegister}>
@@ -89,7 +111,7 @@ export const Form = ({
         label="Development Status"
         value={data.pbiStatusId}
         onChange={handleChangePayload}
-        data={[{ label: 'Select one', value: '' }, ...pbiStatus]}
+        data={[{ label: 'Select one', value: '' }, ...state.pbiStatus]}
       />
       <Button type="submit" label="Save" />
     </form>

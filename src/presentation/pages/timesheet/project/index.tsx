@@ -56,7 +56,11 @@ export const Projects = ({
 
   return (
     <View>
-      <Modal title="Add new Project" onClose={handleClearPayload}>
+      <Modal
+        title="Add new Project"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}

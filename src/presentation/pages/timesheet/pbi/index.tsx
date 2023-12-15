@@ -28,7 +28,7 @@ export const Pbis = ({
   _pbiStatusService,
 }: Props): JSX.Element => {
   const [epics, setEpics] = useState<SelectData[]>([])
-  const [pbiStatus, setPbiStatus] = useState<SelectData[]>([])
+  const [clientId, setClientId] = useState('')
   const { showModal, closeModal } = useModal()
   const deleteRef = useRef()
   const {
@@ -52,21 +52,7 @@ export const Pbis = ({
           value: item.id,
         }))
         setEpics(items)
-      })
-      .catch(e => {
-        console.error(e.message)
-      })
-  }, [])
-
-  useEffect(() => {
-    _pbiStatusService
-      .getAll({ page: 1, pageSize: 999, orderBy: 'sort_order' })
-      .then(res => {
-        const items = res.itens?.map(item => ({
-          label: item.name,
-          value: item.id,
-        }))
-        setPbiStatus(items)
+        if (res.itens.length > 0) setClientId(res.itens[0].project.clientId)
       })
       .catch(e => {
         console.error(e.message)
@@ -75,13 +61,18 @@ export const Pbis = ({
 
   return (
     <View>
-      <Modal title="Add new Pbi" onClose={handleClearPayload}>
+      <Modal
+        title="Add new Pbi"
+        onClose={handleClearPayload}
+        overlayClose={false}
+      >
         <Form
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}
           _pbiService={_pbiService}
+          _pbiStatusService={_pbiStatusService}
           epics={epics}
-          pbiStatus={pbiStatus}
+          clientId={clientId}
           data={{
             id: state.payload.id,
             name: state.payload.name,

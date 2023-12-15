@@ -85,7 +85,7 @@ export const AuthProvider = ({ children }: Props): JSX.Element => {
 
             return await api(error.config)
           default:
-            return error
+            return await Promise.reject(error)
         }
       },
     )
