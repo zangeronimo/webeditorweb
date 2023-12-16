@@ -17,3 +17,14 @@
     padding: 0.5rem;
   }
 }
+
+.pbi_card {
+  border: 1px solid;
+  background-color: $blue50;
+  margin: 0.5rem;
+  padding: 0.5rem;
+
+  &[data-disable='true'] {
+    display: none;
+  }
+}

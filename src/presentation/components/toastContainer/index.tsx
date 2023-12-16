@@ -1,4 +1,4 @@
-import { useTransition } from 'react-spring'
+import { useTransition } from '@react-spring/web'
 import Styles from './styles.module.scss'
 import { Toast } from './toast'
 
