@@ -155,7 +155,7 @@ export const usePbi = ({
       .then(res => {
         handleClearPayload()
         setState(old => ({ ...old, reloadPbis: !old.reloadPbis }))
-        closeModal()
+        closeModal(formRef)
       })
       .catch(e => {
         console.error(e.message)
