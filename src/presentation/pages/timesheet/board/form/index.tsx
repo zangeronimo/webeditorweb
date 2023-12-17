@@ -104,8 +104,8 @@ export const Form = ({
           ]}
         />
       </Group>
-      <Group align="right">
-        {!!data.id && (
+      <Group align="space-between">
+        {data.id ? (
           <Button
             type="button"
             onClick={() => {
@@ -113,6 +113,8 @@ export const Form = ({
             }}
             label="Remove"
           />
+        ) : (
+          <>&nbsp;</>
         )}
         <Button type="submit" label="Save" />
       </Group>

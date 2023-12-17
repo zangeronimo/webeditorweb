@@ -20,6 +20,11 @@
       justify-content: flex-end;
       align-items: center;
     }
+
+    &[data-align='space-between'] {
+      justify-content: space-between;
+      align-items: center;
+    }
   }
 
   &[data-direction='column'] {
@@ -37,6 +42,11 @@
     &[data-align='right'] {
       justify-content: center;
       align-items: flex-end;
+    }
+
+    &[data-align='space-between'] {
+      justify-content: space-between;
+      align-items: center;
     }
   }
 }

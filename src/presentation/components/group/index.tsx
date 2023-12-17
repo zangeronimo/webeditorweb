@@ -3,7 +3,7 @@ import { type HTMLAttributes, type ReactNode } from 'react'
 import Styles from './styles.module.scss'
 
 type Props = HTMLAttributes<HTMLDivElement> & {
-  align?: 'left' | 'center' | 'right'
+  align?: 'left' | 'center' | 'right' | 'space-between'
   direction?: 'row' | 'column'
   children: ReactNode
 }
