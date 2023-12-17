@@ -5,6 +5,8 @@ import { Button } from '../form/button'
 
 type Props = {
   title: string
+  lblCancel?: string
+  lblConfirm?: string
   reference: MutableRefObject<HTMLDivElement>
   children: ReactNode
   onCancel: () => void
@@ -13,6 +15,8 @@ type Props = {
 
 export const Confirm = ({
   title,
+  lblCancel = 'Cancel',
+  lblConfirm = 'Confirm',
   reference,
   onCancel,
   onConfirm,
@@ -23,8 +27,8 @@ export const Confirm = ({
       {children}
 
       <Group>
-        <Button label="Cancel" onClick={onCancel} />
-        <Button label="Delete" onClick={onConfirm} />
+        <Button label={lblCancel} onClick={onCancel} />
+        <Button label={lblConfirm} onClick={onConfirm} />
       </Group>
     </Modal>
   )

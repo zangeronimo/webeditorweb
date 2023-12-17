@@ -5,6 +5,8 @@ export class Seconds {
     const hours = Math.floor(this.value / 3600)
     const minutes = Math.floor((this.value - hours * 3600) / 60)
     const seconds = this.value - hours * 3600 - minutes * 60
-    return `${hours}:${minutes}:${seconds}`
+    return `${hours.toString().padStart(2, '0')}:${minutes
+      .toString()
+      .padStart(2, '0')}:${seconds.toString().padStart(2, '0')}`
   }
 }

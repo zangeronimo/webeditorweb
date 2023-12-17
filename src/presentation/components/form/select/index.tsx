@@ -31,7 +31,7 @@ export const Select = ({
           </option>
         ))}
       </select>
-      <p>{error}</p>
+      {!!error && <p>{error}</p>}
     </div>
   )
 }

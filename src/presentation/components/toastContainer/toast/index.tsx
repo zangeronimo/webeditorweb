@@ -1,9 +1,9 @@
+import { useToast } from '@/presentation/hooks/useToast'
+import { animated } from '@react-spring/web'
 import { useEffect, useRef } from 'react'
-import { animated } from 'react-spring'
 import { type ToastMessage } from '..'
 
 import Styles from './styles.module.scss'
-import { useToast } from '@/presentation/hooks/useToast'
 
 type Props = {
   message: ToastMessage
