@@ -4,6 +4,5 @@ export class PbiStatus {
     readonly name: string,
     readonly order: number,
     readonly status: number,
-    readonly clientId: string,
   ) {}
 }

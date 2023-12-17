@@ -18,7 +18,7 @@ type Props = {
 export const usePbiStatus = ({ _pbiStatusService, deleteRef }: Props): any => {
   const [state, setState] = useState({
     toDelete: '',
-    payload: { id: '', name: '', order: 0, status: 1, clientId: '' },
+    payload: { id: '', name: '', order: 0, status: 1 },
     pbiStatus: { data: [], total: 0 },
     header: [
       { label: 'name', align: 'left', order: 'name' },
@@ -32,7 +32,6 @@ export const usePbiStatus = ({ _pbiStatusService, deleteRef }: Props): any => {
       orderBy: '',
       desc: false,
       name: '',
-      clientId: '',
       status: '',
     },
     reloadData: false,
@@ -57,7 +56,6 @@ export const usePbiStatus = ({ _pbiStatusService, deleteRef }: Props): any => {
         name: '',
         order: 0,
         status: 1,
-        clientId: '',
       },
     }))
   }
@@ -102,7 +100,6 @@ export const usePbiStatus = ({ _pbiStatusService, deleteRef }: Props): any => {
         ...old.filter,
         page: 1,
         name: '',
-        clientId: '',
         status: '',
         orderBy: '',
         desc: false,
@@ -122,7 +119,6 @@ export const usePbiStatus = ({ _pbiStatusService, deleteRef }: Props): any => {
             name: res.name,
             order: res.order,
             status: res.status,
-            clientId: res.clientId,
           },
         }))
         showModal()
@@ -163,9 +159,6 @@ export const usePbiStatus = ({ _pbiStatusService, deleteRef }: Props): any => {
     }
     if (state.filter.name) {
       filter.name = state.filter.name
-    }
-    if (state.filter.clientId) {
-      filter.clientId = state.filter.clientId
     }
     if (state.filter.status) {
       filter.status = state.filter.status
