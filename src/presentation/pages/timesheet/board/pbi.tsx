@@ -1,4 +1,3 @@
-import { type IClientService } from '@/application/interface/timesheet/client'
 import { type IEpicService } from '@/application/interface/timesheet/epic'
 import { type IPbiService } from '@/application/interface/timesheet/pbi'
 import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
@@ -17,20 +16,16 @@ type Props = {
   _pbiService: IPbiService
   _pbiStatusService: IPbiStatusService
   _epicService: IEpicService
-  _clientService: IClientService
   deleteRef: MutableRefObject<HTMLDivElement>
   formRef: MutableRefObject<HTMLDivElement>
-  clientRef: MutableRefObject<HTMLDivElement>
 }
 
 export const usePbi = ({
   _pbiService,
   _pbiStatusService,
   _epicService,
-  _clientService,
   deleteRef,
   formRef,
-  clientRef,
 }: Props): any => {
   const [state, setState] = useState({
     toDelete: '',
@@ -44,9 +39,7 @@ export const usePbi = ({
       pbiStatusId: '',
     },
     columns: [],
-    clients: [],
     epics: [],
-    clientId: '',
     reloadPbis: false,
   })
 
@@ -138,16 +131,6 @@ export const usePbi = ({
       })
   }
 
-  const handleSetClient = (clientId: string): void => {
-    setState(old => ({ ...old, clientId }))
-    showModal(clientRef)
-  }
-
-  const handlePersistClient = (): void => {
-    localStorage.setItem('TIMESHEET_BOARD_CLIENT', state.clientId)
-    closeModal(clientRef)
-  }
-
   const handleNewRegister = (e: FormEvent): void => {
     e.preventDefault()
     _pbiService
@@ -188,27 +171,10 @@ export const usePbi = ({
   }
 
   useEffect(() => {
-    _clientService
-      .getAll({ page: 1, pageSize: 999, orderBy: 'name', status: 1 })
-      .then(res => {
-        const clientsData = res.itens.map(client => ({
-          value: client.id,
-          label: client.name,
-        }))
-        setState(old => ({ ...old, clients: clientsData }))
-      })
-      .catch(e => {
-        toast.danger('Fail on get clients', e.message)
-      })
-  }, [])
-
-  useEffect(() => {
-    if (!state.clientId) return
     _pbiStatusService
       .getAll({
         page: 1,
         pageSize: 999,
-        clientId: state.clientId,
         orderBy: 'sort_order',
         status: 1,
       })
@@ -218,7 +184,7 @@ export const usePbi = ({
       .catch(e => {
         toast.danger('Fail on get columns', e.message)
       })
-  }, [state.clientId, state.reloadPbis])
+  }, [state.reloadPbis])
 
   useEffect(() => {
     _epicService
@@ -235,13 +201,6 @@ export const usePbi = ({
       })
   }, [])
 
-  useEffect(() => {
-    const clientId = localStorage.getItem('TIMESHEET_BOARD_CLIENT')
-    if (clientId) {
-      setState(old => ({ ...old, clientId }))
-    }
-  }, [])
-
   return {
     state,
     handleChangePayload,
@@ -250,8 +209,6 @@ export const usePbi = ({
     handleConfirmDelete,
     handleRegisterWork,
     handleChangeStatus,
-    handleSetClient,
-    handlePersistClient,
     handleNewRegister,
     handleEdit,
   }

@@ -49,11 +49,6 @@ export const Sidebar = (): JSX.Element => {
                   </Link>
                 </li>
                 <li>
-                  <Link to="/timesheet/pbis" title="Pbis">
-                    Pbis
-                  </Link>
-                </li>
-                <li>
                   <Link to="/timesheet/pbistatus" title="Pbi Status">
                     Pbi Status
                   </Link>
