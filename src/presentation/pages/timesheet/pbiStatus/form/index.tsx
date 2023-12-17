@@ -1,11 +1,7 @@
 import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
-import {
-  Input,
-  Save,
-  Select,
-  type SelectData,
-} from '@/presentation/components/form'
+import { Input, Save, Select } from '@/presentation/components/form'
 import { useModal } from '@/presentation/hooks/useModal'
+import { useToast } from '@/presentation/hooks/useToast'
 import { useState, type FormEvent } from 'react'
 
 type Data = {
@@ -13,11 +9,9 @@ type Data = {
   name: string
   order: string
   status: number
-  clientId: string
 }
 
 type Props = {
-  clients: SelectData[]
   handleClearPayload: () => void
   handleChangePayload: (e: FormEvent) => void
   data: Data
@@ -25,7 +19,6 @@ type Props = {
 }
 
 export const Form = ({
-  clients,
   handleClearPayload,
   handleChangePayload,
   data,
@@ -33,18 +26,19 @@ export const Form = ({
 }: Props): JSX.Element => {
   const [, setState] = useState({ reRender: false })
   const { closeModal } = useModal()
+  const { toast } = useToast()
 
   const handleNewRegister = (e: FormEvent): void => {
     e.preventDefault()
     _pbiStatusService
       .save(data)
-      .then(res => {
+      .then(() => {
         handleClearPayload()
         setState(old => ({ reRender: !old.reRender }))
         closeModal()
       })
       .catch(e => {
-        console.error(e.message)
+        toast.danger('Fail on save', e.message)
       })
   }
 
@@ -62,14 +56,6 @@ export const Form = ({
         label="Order"
         value={data.order}
         onChange={handleChangePayload}
-      />
-      <Select
-        disabled={!!data.id}
-        name="clientId"
-        label="Clients"
-        value={data.clientId}
-        onChange={handleChangePayload}
-        data={[{ label: 'Select one', value: '' }, ...clients]}
       />
       <Select
         label="Status"

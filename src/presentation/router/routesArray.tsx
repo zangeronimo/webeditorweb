@@ -4,7 +4,6 @@ import { RoleFactory } from '@/application/factory/system/role'
 import { BoardFactory } from '@/application/factory/timesheet/board'
 import { ClientFactory } from '@/application/factory/timesheet/client'
 import { EpicFactory } from '@/application/factory/timesheet/epic'
-import { PbiFactory } from '@/application/factory/timesheet/pbi'
 import { PbiStatusFactory } from '@/application/factory/timesheet/pbiStatus'
 import { ProjectFactory } from '@/application/factory/timesheet/project'
 import { UserFactory } from '@/application/factory/webeditor/user'
@@ -59,12 +58,6 @@ export const routesArray: RoutePathDefinition[] = [
     title: 'Epics',
     path: '/timesheet/epics',
     element: <EpicFactory />,
-    private: true,
-  },
-  {
-    title: 'PBIs',
-    path: '/timesheet/pbis',
-    element: <PbiFactory />,
     private: true,
   },
   {

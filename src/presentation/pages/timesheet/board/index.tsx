@@ -1,10 +1,8 @@
-import { type IClientService } from '@/application/interface/timesheet/client'
 import { type IEpicService } from '@/application/interface/timesheet/epic'
 import { type IPbiService } from '@/application/interface/timesheet/pbi'
 import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Confirm } from '@/presentation/components/confirm'
-import { Button, Select } from '@/presentation/components/form'
-import { Group } from '@/presentation/components/group'
+import { Button } from '@/presentation/components/form'
 import { Modal } from '@/presentation/components/modal'
 import { View } from '@/presentation/components/view'
 import { ViewBox } from '@/presentation/components/viewBox'
@@ -19,20 +17,17 @@ import Styles from './styles.module.scss'
 type Props = {
   _pbiService: IPbiService
   _pbiStatusService: IPbiStatusService
-  _clientService: IClientService
   _epicService: IEpicService
 }
 
 export const Board = ({
   _pbiService,
   _pbiStatusService,
-  _clientService,
   _epicService,
 }: Props): JSX.Element => {
   const { closeModal, showModal } = useModal()
   const deleteRef = useRef()
   const formRef = useRef()
-  const clientRef = useRef()
   const {
     state,
     handleChangePayload,
@@ -41,18 +36,14 @@ export const Board = ({
     handleConfirmDelete,
     handleChangeStatus,
     handleRegisterWork,
-    handleSetClient,
-    handlePersistClient,
     handleNewRegister,
     handleEdit,
   } = usePbi({
     _pbiService,
     _pbiStatusService,
     _epicService,
-    _clientService,
     deleteRef,
     formRef,
-    clientRef,
   })
 
   return (
@@ -69,7 +60,6 @@ export const Board = ({
           handleChangePayload={handleChangePayload}
           _pbiStatusService={_pbiStatusService}
           epics={state.epics}
-          clientId={state.clientId}
           data={{
             id: state.payload.id,
             name: state.payload.name,
@@ -93,60 +83,34 @@ export const Board = ({
       >
         <p>Are you sure to delete the epic?</p>
       </Confirm>
-      <Confirm
-        reference={clientRef}
-        title="Confirm"
-        lblConfirm="Save client"
-        onConfirm={handlePersistClient}
-        onCancel={() => {
-          closeModal(clientRef)
-        }}
-      >
-        <p>Do you want to save this client?</p>
-      </Confirm>
-      <ViewBox title="Filter">
-        <Group>
-          <Select
-            name="clientId"
-            label="Clients"
-            value={state.clientId}
-            onChange={e => {
-              handleSetClient(e.currentTarget.value)
-            }}
-            data={[{ label: 'Select one', value: '' }, ...state.clients]}
-          />
-        </Group>
+      <ViewBox title="Board">
+        <Button
+          label="Add new pbi"
+          onClick={() => {
+            showModal(formRef)
+          }}
+        />
+        <div className={Styles.container}>
+          {state.columns.map(item => (
+            <div className={Styles.column} key={item.id}>
+              <p>{item.name}</p>
+              {item.pbis?.map(pbi => (
+                <PbiCard
+                  onEdit={handleEdit}
+                  key={pbi.id}
+                  onChangeStatus={handleChangeStatus}
+                  onRegisterWork={handleRegisterWork}
+                  pbi={pbi}
+                  pbiStatus={state.columns.map(item => ({
+                    label: item.name,
+                    value: item.id,
+                  }))}
+                />
+              ))}
+            </div>
+          ))}
+        </div>
       </ViewBox>
-      {!!state.clientId && (
-        <ViewBox title="Board">
-          <Button
-            label="Add new pbi"
-            onClick={() => {
-              showModal(formRef)
-            }}
-          />
-          <div className={Styles.container}>
-            {state.columns.map(item => (
-              <div className={Styles.column} key={item.id}>
-                <p>{item.name}</p>
-                {item.pbis?.map(pbi => (
-                  <PbiCard
-                    onEdit={handleEdit}
-                    key={pbi.id}
-                    onChangeStatus={handleChangeStatus}
-                    onRegisterWork={handleRegisterWork}
-                    pbi={pbi}
-                    pbiStatus={state.columns.map(item => ({
-                      label: item.name,
-                      value: item.id,
-                    }))}
-                  />
-                ))}
-              </div>
-            ))}
-          </div>
-        </ViewBox>
-      )}
     </View>
   )
 }

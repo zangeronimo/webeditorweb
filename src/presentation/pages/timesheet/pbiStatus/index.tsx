@@ -1,33 +1,22 @@
-import { type IClientService } from '@/application/interface/timesheet/client'
 import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Confirm } from '@/presentation/components/confirm'
 import { DataTable } from '@/presentation/components/datatable'
 import { Pagination } from '@/presentation/components/datatable/pagination'
-import {
-  Button,
-  Input,
-  Select,
-  type SelectData,
-} from '@/presentation/components/form'
+import { Button, Input, Select } from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
 import { Modal } from '@/presentation/components/modal'
 import { View } from '@/presentation/components/view'
 import { ViewBox } from '@/presentation/components/viewBox'
 import { useModal } from '@/presentation/hooks/useModal'
-import { useEffect, useRef, useState } from 'react'
+import { useRef } from 'react'
 import { Form } from './form'
 import { usePbiStatus } from './pbiStatus'
 
 type Props = {
   _pbiStatusService: IPbiStatusService
-  _clientService: IClientService
 }
 
-export const PbiStatus = ({
-  _pbiStatusService,
-  _clientService,
-}: Props): JSX.Element => {
-  const [clients, setClients] = useState<SelectData[]>([])
+export const PbiStatus = ({ _pbiStatusService }: Props): JSX.Element => {
   const { showModal, closeModal } = useModal()
   const deleteRef = useRef()
   const {
@@ -42,21 +31,6 @@ export const PbiStatus = ({
     handleDelete,
   } = usePbiStatus({ _pbiStatusService, deleteRef })
 
-  useEffect(() => {
-    _clientService
-      .getAll({ page: 1, pageSize: 999 })
-      .then(res => {
-        const items = res.itens?.map(item => ({
-          label: item.name,
-          value: item.id,
-        }))
-        setClients(items)
-      })
-      .catch(e => {
-        console.error(e.message)
-      })
-  }, [])
-
   return (
     <View>
       <Modal
@@ -68,13 +42,11 @@ export const PbiStatus = ({
           handleClearPayload={handleClearPayload}
           handleChangePayload={handleChangePayload}
           _pbiStatusService={_pbiStatusService}
-          clients={clients}
           data={{
             id: state.payload.id,
             name: state.payload.name,
             order: state.payload.order,
             status: state.payload.status,
-            clientId: state.payload.clientId,
           }}
         />
       </Modal>
@@ -86,7 +58,7 @@ export const PbiStatus = ({
           closeModal(deleteRef)
         }}
       >
-        <p>Are you sure to delete the client?</p>
+        <p>Are you sure to delete the pbiStatus?</p>
       </Confirm>
       <ViewBox title="Filter">
         <form onSubmit={handleSubmit}>
@@ -96,13 +68,6 @@ export const PbiStatus = ({
               label="Name"
               value={state.filter.name}
               onChange={handleChangeFilter}
-            />
-            <Select
-              name="clientId"
-              label="Clients"
-              value={state.filter.clientId}
-              onChange={handleChangeFilter}
-              data={[{ label: 'All', value: '' }, ...clients]}
             />
             <Select
               name="status"
