@@ -1,7 +1,6 @@
 import { DataTable } from '@/presentation/components/datatable'
 import { Pagination } from '@/presentation/components/datatable/pagination'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
+import { Button, Input } from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
 import { Modal } from '@/presentation/components/modal'
 import { View } from '@/presentation/components/view'

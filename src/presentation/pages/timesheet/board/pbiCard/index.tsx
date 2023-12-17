@@ -1,6 +1,5 @@
 import { type Pbi } from '@/domain/entity/timesheet/pbi'
-import { Button } from '@/presentation/components/form/button'
-import { Select, type SelectData } from '@/presentation/components/form/select'
+import { Button, Select, type SelectData } from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
 
 import Styles from './styles.module.scss'
@@ -43,6 +42,7 @@ export const PbiCard = ({
           <Button
             disabled={pbi.status === 0}
             label={pbi.working ? 'Stop' : 'Start'}
+            pattern={pbi.working ? 'warning' : 'info'}
             onClick={() => {
               onRegisterWork(pbi.id)
             }}

@@ -1,6 +1,5 @@
 import { type IMakeLogin } from '@/application/interface/system/makeLogin'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
+import { Button, Input } from '@/presentation/components/form'
 import { View } from '@/presentation/components/view'
 import { useAuth } from '@/presentation/hooks/useAuth'
 import { useEffect, type FormEvent } from 'react'

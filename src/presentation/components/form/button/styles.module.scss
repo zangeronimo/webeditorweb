@@ -1,6 +1,50 @@
+@import '@/presentation/styles/colors.scss';
+
 .container {
   display: flex;
   align-items: center;
   justify-content: center;
   padding: 0.5rem 1rem;
+  border: 1px solid;
+  border-radius: 4px;
+  margin: 0.5rem;
+  transition: all 0.2ms;
+
+  &:hover {
+    filter: brightness(0.9);
+  }
+
+  &[data-pattern='success'] {
+    background-color: $success;
+    border-color: $success-dark;
+    color: $blue50;
+  }
+
+  &[data-pattern='danger'] {
+    background-color: $danger;
+    border-color: $danger-dark;
+    color: $blue50;
+  }
+
+  &[data-pattern='warning'] {
+    background-color: $warning;
+    border-color: $warning-dark;
+    color: $white;
+  }
+
+  &[data-pattern='info'] {
+    background-color: $info;
+    border-color: $info-dark;
+    color: $blue50;
+  }
+
+  &[data-pattern='link'] {
+    background: none;
+    border: none;
+    text-decoration: underline;
+
+    &:hover {
+      border: 1px solid;
+    }
+  }
 }

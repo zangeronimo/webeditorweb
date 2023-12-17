@@ -1,8 +1,7 @@
 import { type ICompanyService } from '@/application/interface/system/company'
 import { type Company } from '@/domain/entity/system/company'
 import { type Module } from '@/domain/entity/system/module'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
+import { Input, Save } from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
 import { useState, type FormEvent } from 'react'
@@ -72,7 +71,7 @@ export const Form = ({
           </div>
         ))}
       </Group>
-      <Button type="submit" label="Save" />
+      <Save />
     </form>
   )
 }

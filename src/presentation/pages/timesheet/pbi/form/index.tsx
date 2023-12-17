@@ -1,11 +1,14 @@
 import { type IPbiService } from '@/application/interface/timesheet/pbi'
 import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Editor } from '@/presentation/components/editor'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
-import { Select, type SelectData } from '@/presentation/components/form/select'
+import {
+  Input,
+  Save,
+  Select,
+  type SelectData,
+} from '@/presentation/components/form'
 import { useModal } from '@/presentation/hooks/useModal'
-import { useState, type FormEvent, useEffect } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 
 type Data = {
   id?: string
@@ -113,7 +116,7 @@ export const Form = ({
         onChange={handleChangePayload}
         data={[{ label: 'Select one', value: '' }, ...state.pbiStatus]}
       />
-      <Button type="submit" label="Save" />
+      <Save />
     </form>
   )
 }

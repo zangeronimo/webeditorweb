@@ -1,7 +1,10 @@
 import { type IRoleService } from '@/application/interface/system/role'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
-import { Select, type SelectData } from '@/presentation/components/form/select'
+import {
+  Input,
+  Save,
+  Select,
+  type SelectData,
+} from '@/presentation/components/form'
 import { useModal } from '@/presentation/hooks/useModal'
 import { type FormEvent } from 'react'
 
@@ -72,7 +75,7 @@ export const Form = ({
         onChange={handleChangePayload}
         data={[{ label: 'Select one', value: '' }, ...modules]}
       />
-      <Button type="submit" label="Save" />
+      <Save />
     </form>
   )
 }
