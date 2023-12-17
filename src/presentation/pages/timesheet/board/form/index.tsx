@@ -22,7 +22,6 @@ type Data = {
 
 type Props = {
   epics: SelectData[]
-  clientId: string
   handleNewRegister: () => void
   handleChangePayload: (e: FormEvent) => void
   onDelete: (pbiId: string) => void
@@ -32,7 +31,6 @@ type Props = {
 
 export const Form = ({
   epics,
-  clientId,
   handleNewRegister,
   handleChangePayload,
   data,
@@ -44,7 +42,7 @@ export const Form = ({
   })
   useEffect((): void => {
     _pbiStatusService
-      .getAll({ page: 1, pageSize: 999, orderBy: 'sort_order', clientId })
+      .getAll({ page: 1, pageSize: 999, orderBy: 'sort_order' })
       .then(res => {
         const items = res.itens?.map(item => ({
           label: item.name,
@@ -55,7 +53,7 @@ export const Form = ({
       .catch(e => {
         console.error(e.message)
       })
-  }, [clientId])
+  }, [])
 
   return (
     <form onSubmit={handleNewRegister}>

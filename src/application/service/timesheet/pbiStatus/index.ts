@@ -9,14 +9,7 @@ export class PbiStatusService implements IPbiStatusService {
       .get('/timesheet/pbistatus', { params: filter })
       .then(async (res: any) => {
         const pbiStatus: PbiStatus[] = res.itens?.map(
-          item =>
-            new PbiStatus(
-              item.id,
-              item.name,
-              item.order,
-              item.status,
-              item.clientId,
-            ),
+          item => new PbiStatus(item.id, item.name, item.order, item.status),
         )
         return await Promise.resolve({ itens: pbiStatus, total: res.total })
       })
@@ -27,13 +20,7 @@ export class PbiStatusService implements IPbiStatusService {
     return await this.http
       .get(`/timesheet/pbistatus/${id}`)
       .then(async (res: any) => {
-        return new PbiStatus(
-          res.id,
-          res.name,
-          res.order,
-          res.status,
-          res.clientId,
-        )
+        return new PbiStatus(res.id, res.name, res.order, res.status)
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }
@@ -47,7 +34,6 @@ export class PbiStatusService implements IPbiStatusService {
           name: payload.name,
           order: payload.order,
           status: payload.status,
-          clientId: payload.clientId,
         })
     } else {
       request = async () =>
@@ -55,13 +41,12 @@ export class PbiStatusService implements IPbiStatusService {
           name: payload.name,
           order: payload.order,
           status: payload.status,
-          clientId: payload.clientId,
         })
     }
     return request()
       .then(
         async (res: PbiStatus) =>
-          new PbiStatus(res.id, res.name, res.order, res.status, res.clientId),
+          new PbiStatus(res.id, res.name, res.order, res.status),
       )
       .catch(async e => await Promise.reject(new Error(e.response.data)))
   }

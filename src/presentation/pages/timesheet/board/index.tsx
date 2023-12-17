@@ -69,7 +69,6 @@ export const Board = ({
           handleChangePayload={handleChangePayload}
           _pbiStatusService={_pbiStatusService}
           epics={state.epics}
-          clientId={state.clientId}
           data={{
             id: state.payload.id,
             name: state.payload.name,
