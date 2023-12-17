@@ -78,8 +78,10 @@ export const usePbi = ({
         setState(old => ({ ...old, toDelete: '', reloadPbis: !old.reloadPbis }))
       })
       .catch(e => {
-        handleClearPayload()
         toast.danger('Fail to remove the PBI', e.message)
+      })
+      .finally(() => {
+        handleClearPayload()
       })
   }
 
