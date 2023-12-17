@@ -3,6 +3,7 @@ import { type IEpicService } from '@/application/interface/timesheet/epic'
 import { type IPbiService } from '@/application/interface/timesheet/pbi'
 import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Confirm } from '@/presentation/components/confirm'
+import { Button } from '@/presentation/components/form/button'
 import { Select } from '@/presentation/components/form/select'
 import { Group } from '@/presentation/components/group'
 import { Modal } from '@/presentation/components/modal'
@@ -15,7 +16,6 @@ import { usePbi } from './pbi'
 import { PbiCard } from './pbiCard'
 
 import Styles from './styles.module.scss'
-import { Button } from '@/presentation/components/form/button'
 
 type Props = {
   _pbiService: IPbiService
@@ -85,6 +85,7 @@ export const Board = ({
       <Confirm
         reference={deleteRef}
         title="Confirm"
+        lblConfirm="Delete"
         onConfirm={handleDelete}
         onCancel={() => {
           closeModal(deleteRef)
@@ -95,6 +96,7 @@ export const Board = ({
       <Confirm
         reference={clientRef}
         title="Confirm"
+        lblConfirm="Save client"
         onConfirm={handlePersistClient}
         onCancel={() => {
           closeModal(clientRef)

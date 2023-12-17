@@ -1,6 +1,7 @@
 import { useTransition } from '@react-spring/web'
-import Styles from './styles.module.scss'
 import { Toast } from './toast'
+
+import Styles from './styles.module.scss'
 
 export type ToastMessage = {
   id: string
