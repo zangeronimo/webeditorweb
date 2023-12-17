@@ -1,5 +1,5 @@
 import { type IPbiService } from '@/application/interface/timesheet/pbi'
-import { Button } from '@/presentation/components/form/button'
+import { Button, Delete, Edit } from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
 import {
@@ -216,18 +216,17 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
                         (!!working && working !== row.id) || row.status === 0
                       }
                       label={row.working ? 'Stop' : 'Start'}
+                      pattern={row.working ? 'warning' : 'info'}
                       onClick={() => {
                         handleRegisterWork(row.id)
                       }}
                     />
-                    <Button
-                      label="Edit"
+                    <Edit
                       onClick={() => {
                         handleEdit(row.id)
                       }}
                     />
-                    <Button
-                      label="Delete"
+                    <Delete
                       onClick={() => {
                         handleConfirmDelete(row.id)
                       }}

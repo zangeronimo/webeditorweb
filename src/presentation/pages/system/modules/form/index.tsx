@@ -1,6 +1,5 @@
 import { type IModuleService } from '@/application/interface/system/module'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
+import { Save, Input } from '@/presentation/components/form'
 import { useModal } from '@/presentation/hooks/useModal'
 import { type FormEvent } from 'react'
 
@@ -46,7 +45,7 @@ export const Form = ({
         value={data.name}
         onChange={handleChangePayload}
       />
-      <Button type="submit" label="Save" />
+      <Save />
     </form>
   )
 }

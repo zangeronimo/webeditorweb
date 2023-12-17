@@ -1,8 +1,11 @@
 import { type IProjectService } from '@/application/interface/timesheet/project'
 import { Editor } from '@/presentation/components/editor'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
-import { Select, type SelectData } from '@/presentation/components/form/select'
+import {
+  Input,
+  Save,
+  Select,
+  type SelectData,
+} from '@/presentation/components/form'
 import { useModal } from '@/presentation/hooks/useModal'
 import { useState, type FormEvent } from 'react'
 
@@ -81,7 +84,7 @@ export const Form = ({
           { label: 'Inactive', value: 0 },
         ]}
       />
-      <Button type="submit" label="Save" />
+      <Save />
     </form>
   )
 }

@@ -1,12 +1,13 @@
 import { type MutableRefObject, type ReactNode } from 'react'
-import { Modal } from '../modal'
+import { Button, Cancel, type ButtonProps } from '../form'
 import { Group } from '../group'
-import { Button } from '../form/button'
+import { Modal } from '../modal'
 
 type Props = {
   title: string
   lblCancel?: string
   lblConfirm?: string
+  confirmPattern?: ButtonProps['pattern']
   reference: MutableRefObject<HTMLDivElement>
   children: ReactNode
   onCancel: () => void
@@ -17,6 +18,7 @@ export const Confirm = ({
   title,
   lblCancel = 'Cancel',
   lblConfirm = 'Confirm',
+  confirmPattern = 'success',
   reference,
   onCancel,
   onConfirm,
@@ -27,8 +29,12 @@ export const Confirm = ({
       {children}
 
       <Group>
-        <Button label={lblCancel} onClick={onCancel} />
-        <Button label={lblConfirm} onClick={onConfirm} />
+        <Cancel label={lblCancel} onClick={onCancel} />
+        <Button
+          label={lblConfirm}
+          pattern={confirmPattern}
+          onClick={onConfirm}
+        />
       </Group>
     </Modal>
   )

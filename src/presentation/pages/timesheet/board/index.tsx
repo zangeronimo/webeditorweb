@@ -3,8 +3,7 @@ import { type IEpicService } from '@/application/interface/timesheet/epic'
 import { type IPbiService } from '@/application/interface/timesheet/pbi'
 import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Confirm } from '@/presentation/components/confirm'
-import { Button } from '@/presentation/components/form/button'
-import { Select } from '@/presentation/components/form/select'
+import { Button, Select } from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
 import { Modal } from '@/presentation/components/modal'
 import { View } from '@/presentation/components/view'
@@ -86,6 +85,7 @@ export const Board = ({
         reference={deleteRef}
         title="Confirm"
         lblConfirm="Delete"
+        confirmPattern="danger"
         onConfirm={handleDelete}
         onCancel={() => {
           closeModal(deleteRef)

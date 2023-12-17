@@ -1,7 +1,6 @@
 import { type IUserService } from '@/application/interface/webeditor/user'
 import { type User } from '@/domain/entity/webeditor/user'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
+import { Input, Save } from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
 import { useState, type FormEvent } from 'react'
@@ -94,7 +93,7 @@ export const Form = ({
         ))}
       </Group>
       <Group align="right">
-        <Button type="submit" label="Save" />
+        <Save />
       </Group>
     </form>
   )

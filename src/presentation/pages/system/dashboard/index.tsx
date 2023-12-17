@@ -1,4 +1,5 @@
 import { Editor } from '@/presentation/components/editor'
+import { Button } from '@/presentation/components/form'
 import { ViewBox } from '@/presentation/components/viewBox'
 
 export const Dashboard = (): JSX.Element => {
@@ -12,6 +13,12 @@ export const Dashboard = (): JSX.Element => {
           }}
         />
       </ViewBox>
+      <Button label="success" pattern="success" />
+      <Button label="danger" pattern="danger" />
+      <Button label="warning" pattern="warning" />
+      <Button label="info" pattern="info" />
+      <Button label="normal" pattern="normal" />
+      <Button label="link" pattern="link" />
     </div>
   )
 }

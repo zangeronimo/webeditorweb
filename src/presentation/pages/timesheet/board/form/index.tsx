@@ -1,10 +1,14 @@
 import { type IPbiStatusService } from '@/application/interface/timesheet/pbiStatus'
 import { Editor } from '@/presentation/components/editor'
-import { Button } from '@/presentation/components/form/button'
-import { Input } from '@/presentation/components/form/input'
-import { Select, type SelectData } from '@/presentation/components/form/select'
+import {
+  Delete,
+  Input,
+  Save,
+  Select,
+  type SelectData,
+} from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
-import { useState, type FormEvent, useEffect } from 'react'
+import { useEffect, useState, type FormEvent } from 'react'
 
 type Data = {
   id?: string
@@ -106,17 +110,15 @@ export const Form = ({
       </Group>
       <Group align="space-between">
         {data.id ? (
-          <Button
-            type="button"
+          <Delete
             onClick={() => {
               onDelete(data.id)
             }}
-            label="Remove"
           />
         ) : (
           <>&nbsp;</>
         )}
-        <Button type="submit" label="Save" />
+        <Save />
       </Group>
     </form>
   )

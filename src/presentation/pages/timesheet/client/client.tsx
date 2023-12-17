@@ -1,11 +1,11 @@
 import { type IClientService } from '@/application/interface/timesheet/client'
-import { Button } from '@/presentation/components/form/button'
+import { Delete, Edit } from '@/presentation/components/form'
 import { Group } from '@/presentation/components/group'
 import { useModal } from '@/presentation/hooks/useModal'
 import {
-  type ChangeEvent,
   useEffect,
   useState,
+  type ChangeEvent,
   type FormEvent,
   type MutableRefObject,
 } from 'react'
@@ -168,14 +168,12 @@ export const useClient = ({ _clientService, deleteRef }: Props): any => {
                 align: 'right',
                 value: (
                   <Group align="right">
-                    <Button
-                      label="Edit"
+                    <Edit
                       onClick={() => {
                         handleEdit(row.id)
                       }}
                     />
-                    <Button
-                      label="Delete"
+                    <Delete
                       onClick={() => {
                         handleConfirmDelete(row.id)
                       }}
