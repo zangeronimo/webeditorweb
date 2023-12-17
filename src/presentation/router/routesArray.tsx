@@ -7,7 +7,6 @@ import { EpicFactory } from '@/application/factory/timesheet/epic'
 import { PbiFactory } from '@/application/factory/timesheet/pbi'
 import { PbiStatusFactory } from '@/application/factory/timesheet/pbiStatus'
 import { ProjectFactory } from '@/application/factory/timesheet/project'
-import { TaskFactory } from '@/application/factory/timesheet/task'
 import { UserFactory } from '@/application/factory/webeditor/user'
 import { Dashboard } from '../pages/system/dashboard'
 import { type RoutePathDefinition } from './matchRouterDefinitions'
@@ -72,12 +71,6 @@ export const routesArray: RoutePathDefinition[] = [
     title: 'PBI Status',
     path: '/timesheet/pbistatus',
     element: <PbiStatusFactory />,
-    private: true,
-  },
-  {
-    title: 'Tasks',
-    path: '/timesheet/tasks',
-    element: <TaskFactory />,
     private: true,
   },
 ]

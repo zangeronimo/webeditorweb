@@ -4,6 +4,7 @@
   display: flex;
   align-items: flex-start;
   justify-content: flex-start;
+  overflow-x: auto;
   gap: 1px;
 }
 
@@ -15,16 +16,5 @@
     background-color: $grey900;
     color: $blue50;
     padding: 0.5rem;
-  }
-}
-
-.pbi_card {
-  border: 1px solid;
-  background-color: $blue50;
-  margin: 0.5rem;
-  padding: 0.5rem;
-
-  &[data-disable='true'] {
-    display: none;
   }
 }

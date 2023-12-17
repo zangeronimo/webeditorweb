@@ -2,6 +2,7 @@ import { type IHttpProvider } from '@/application/interface/httpProvider'
 import { type IPbiService } from '@/application/interface/timesheet/pbi'
 import { Epic } from '@/domain/entity/timesheet/epic'
 import { Pbi } from '@/domain/entity/timesheet/pbi'
+import { Seconds } from '@/domain/valueObject/seconds'
 
 export class PbiService implements IPbiService {
   constructor(readonly http: IHttpProvider) {}
@@ -15,8 +16,10 @@ export class PbiService implements IPbiService {
               item.id,
               item.sequence,
               item.name,
-              item.descritpion,
+              item.description,
+              item.order,
               item.status,
+              item.epicId,
               item.pbiStatusId,
               new Epic(
                 item.epic.id,
@@ -27,6 +30,8 @@ export class PbiService implements IPbiService {
                 item.epic.projectId,
                 item.epic.project,
               ),
+              new Seconds(item.totalInSeconds),
+              item.working,
             ),
         )
         return await Promise.resolve({ itens: pbis, total: res.total })
@@ -43,7 +48,9 @@ export class PbiService implements IPbiService {
           res.sequence,
           res.name,
           res.description,
+          res.order,
           res.status,
+          res.epicId,
           res.pbiStatusId,
           new Epic(
             res.epic.id,
@@ -54,9 +61,19 @@ export class PbiService implements IPbiService {
             res.epic.projectId,
             res.epic.project,
           ),
+          new Seconds(res.totalInSeconds),
+          res.working,
         )
       })
       .catch(async e => await Promise.reject(new Error(e.response.data)))
+  }
+
+  registerWork = async (id: string): Promise<void> => {
+    await this.http
+      .patch(`/timesheet/pbi/register-work/${id}`)
+      .catch(async e => {
+        await Promise.reject(new Error(e.response.data))
+      })
   }
 
   save = async (payload: any): Promise<Pbi> => {
@@ -67,6 +84,7 @@ export class PbiService implements IPbiService {
           id: payload.id,
           name: payload.name,
           description: payload.description,
+          order: payload.order,
           status: payload.status,
           pbiStatusId: payload.pbiStatusId,
           epicId: payload.epicId,
@@ -76,6 +94,7 @@ export class PbiService implements IPbiService {
         await this.http.post('/timesheet/pbi', {
           name: payload.name,
           description: payload.description,
+          order: payload.order,
           status: payload.status,
           pbiStatusId: payload.pbiStatusId,
           epicId: payload.epicId,
@@ -89,7 +108,9 @@ export class PbiService implements IPbiService {
             res.sequence,
             res.name,
             res.description,
+            res.order,
             res.status,
+            res.epicId,
             res.pbiStatusId,
             new Epic(
               res.epic.id,
@@ -100,6 +121,8 @@ export class PbiService implements IPbiService {
               res.epic.projectId,
               res.epic.project,
             ),
+            res.totalInSeconds,
+            res.working,
           ),
       )
       .catch(async e => await Promise.reject(new Error(e.response.data)))

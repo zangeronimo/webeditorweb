@@ -30,6 +30,7 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
     header: [
       { label: 'ID', align: 'left', order: 'sequence' },
       { label: 'name', align: 'left', order: 'name' },
+      { label: 'time worked', align: 'right' },
       { label: 'epic', align: 'left' },
       { label: 'status', align: 'right', order: 'status' },
       { label: 'tools', align: 'right' },
@@ -119,6 +120,18 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
     }))
   }
 
+  const handleRegisterWork = (id: string): void => {
+    _pbiService
+      .registerWork(id)
+      .then(() => {
+        setState(old => ({ ...old, reloadData: !old.reloadData }))
+      })
+      .catch(e => {
+        handleClearPayload()
+        console.error(e.message)
+      })
+  }
+
   const handleEdit = (id: string): void => {
     _pbiService
       .getById(id)
@@ -184,17 +197,29 @@ export const usePbi = ({ _pbiService, deleteRef }: Props): any => {
     _pbiService
       .getAll(filter)
       .then((res: any) => {
+        let working = ''
         const pbisData = res.itens?.map(row => {
+          if (row.working) working = row.id
           return {
             values: [
               { value: row.sequence },
               { value: row.name },
               { value: row.epic.name },
+              { value: row.totalInSeconds.formatToHours() },
               { align: 'right', value: row.status },
               {
                 align: 'right',
                 value: (
                   <Group align="right">
+                    <Button
+                      disabled={
+                        (!!working && working !== row.id) || row.status === 0
+                      }
+                      label={row.working ? 'Stop' : 'Start'}
+                      onClick={() => {
+                        handleRegisterWork(row.id)
+                      }}
+                    />
                     <Button
                       label="Edit"
                       onClick={() => {
