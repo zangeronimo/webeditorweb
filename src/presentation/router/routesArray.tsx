@@ -9,6 +9,10 @@ import { ProjectFactory } from '@/application/factory/timesheet/project'
 import { UserFactory } from '@/application/factory/webeditor/user'
 import { Dashboard } from '../pages/system/dashboard'
 import { type RoutePathDefinition } from './matchRouterDefinitions'
+import { LevelFactory } from '@/application/factory/culinary/level'
+import { CategoryFactory } from '@/application/factory/culinary/category'
+import { RecipeFactory } from '@/application/factory/culinary/recipe'
+import { RatingFactory } from '@/application/factory/culinary/rating'
 
 export const routesArray: RoutePathDefinition[] = [
   { title: 'Dashboard', path: '/', element: <Dashboard />, private: true },
@@ -64,6 +68,30 @@ export const routesArray: RoutePathDefinition[] = [
     title: 'PBI Status',
     path: '/timesheet/pbistatus',
     element: <PbiStatusFactory />,
+    private: true,
+  },
+  {
+    title: 'Culinary Levels',
+    path: '/culinary/levels',
+    element: <LevelFactory />,
+    private: true,
+  },
+  {
+    title: 'Culinary Categories',
+    path: '/culinary/categories',
+    element: <CategoryFactory />,
+    private: true,
+  },
+  {
+    title: 'Culinary Recipes',
+    path: '/culinary/recipes',
+    element: <RecipeFactory />,
+    private: true,
+  },
+  {
+    title: 'Culinary Rating',
+    path: '/culinary/ratings',
+    element: <RatingFactory />,
     private: true,
   },
 ]

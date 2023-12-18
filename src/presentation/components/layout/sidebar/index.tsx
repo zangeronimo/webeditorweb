@@ -60,6 +60,39 @@ export const Sidebar = (): JSX.Element => {
         <li>
           <span
             onClick={() => {
+              openMenu('culinary')
+            }}
+          >
+            <h3>Culinary</h3>
+            {state.opened === 'culinary' && (
+              <ul className={Styles.sub}>
+                <li>
+                  <Link to="/culinary/levels" title="Levels">
+                    Levels
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/culinary/categories" title="Categories">
+                    Categories
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/culinary/recipes" title="Recipes">
+                    Recipes
+                  </Link>
+                </li>
+                <li>
+                  <Link to="/culinary/ratings" title="Ratings">
+                    Ratings
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </span>
+        </li>
+        <li>
+          <span
+            onClick={() => {
               openMenu('webeditor')
             }}
           >
