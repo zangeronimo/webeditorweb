@@ -93,6 +93,24 @@ export const Sidebar = (): JSX.Element => {
         <li>
           <span
             onClick={() => {
+              openMenu('institutional')
+            }}
+          >
+            <h3>Institutional</h3>
+            {state.opened === 'institutional' && (
+              <ul className={Styles.sub}>
+                <li>
+                  <Link to="/institutional/newsletter" title="Newsletters">
+                    Newsletters
+                  </Link>
+                </li>
+              </ul>
+            )}
+          </span>
+        </li>
+        <li>
+          <span
+            onClick={() => {
               openMenu('webeditor')
             }}
           >
