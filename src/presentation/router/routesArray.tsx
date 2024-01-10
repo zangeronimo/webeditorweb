@@ -13,6 +13,7 @@ import { LevelFactory } from '@/application/factory/culinary/level'
 import { CategoryFactory } from '@/application/factory/culinary/category'
 import { RecipeFactory } from '@/application/factory/culinary/recipe'
 import { RatingFactory } from '@/application/factory/culinary/rating'
+import { NewsletterFactory } from '@/application/factory/institutional/newsletter'
 
 export const routesArray: RoutePathDefinition[] = [
   { title: 'Dashboard', path: '/', element: <Dashboard />, private: true },
@@ -92,6 +93,12 @@ export const routesArray: RoutePathDefinition[] = [
     title: 'Culinary Rating',
     path: '/culinary/ratings',
     element: <RatingFactory />,
+    private: true,
+  },
+  {
+    title: 'Institutional Newsletter',
+    path: '/institutional/newsletter',
+    element: <NewsletterFactory />,
     private: true,
   },
 ]
