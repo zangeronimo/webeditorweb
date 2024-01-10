@@ -95,12 +95,16 @@ export const usePbi = ({
       .getAll({
         page: 1,
         pageSize: 9999,
-        orderBy: 'sort_order',
-        desc: true,
       })
       .then(res => {
-        columns.map(column => {
-          column.pbis = res.itens.filter(pbi => pbi.pbiStatusId === column.id)
+        const total = columns.length
+        columns.map((column, index) => {
+          column.pbis = res.itens
+            .filter(pbi => pbi.pbiStatusId === column.id)
+            .sort((a, b) => {
+              if (total > index + 1) return b.order - a.order
+              return b.sequence - a.sequence
+            })
           return column
         })
         setState(old => ({ ...old, columns }))

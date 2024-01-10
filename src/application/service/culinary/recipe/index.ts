@@ -54,6 +54,7 @@ export class RecipeService implements IRecipeService {
           preparation: payload.preparation,
           active: payload.active,
           categoryId: payload.categoryId,
+          imageUpload: payload.imageUpload,
         })
     } else {
       request = async () =>
