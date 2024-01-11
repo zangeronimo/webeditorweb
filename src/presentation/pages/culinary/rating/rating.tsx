@@ -230,7 +230,7 @@ export const useRating = ({
 
   useEffect(() => {
     _recipeService
-      .getAll({ page: 1, pageSize: 999, orderBy: 'name' })
+      .getAll({ page: 1, pageSize: 9999, orderBy: 'name' })
       .then(res => {
         const recipes = res.itens.map(item => ({
           label: item.name,
